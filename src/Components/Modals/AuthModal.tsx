@@ -3,10 +3,15 @@ import Login from "./Login";
 import Signup from './Signup';
 import React from "react";
 import ResetPassword from "./ResetPassword";
+import { useRecoilValue } from "recoil";
+import { authModalState } from "@/Atoms/authModalAtom";
 
 type Props = {};
 
 export default function AuthModal({}: Props) {
+
+  const authModal = useRecoilValue(authModalState);
+
   return (
     <>
       <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-75"></div>
@@ -24,7 +29,7 @@ export default function AuthModal({}: Props) {
               </button>
             </div>
 
-            <ResetPassword />
+            {authModal.type === "login" ? <Login /> : authModal.type === "register" ? <Signup /> : <ResetPassword />}
           </div>
         </div>
       </div>

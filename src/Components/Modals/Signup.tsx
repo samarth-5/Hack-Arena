@@ -1,8 +1,17 @@
+import { authModalState } from "@/Atoms/authModalAtom";
 import React from "react";
+import { useSetRecoilState } from "recoil";
 
 type Props = {};
 
 export default function Register({}: Props) {
+
+  const setAuthModalState = useSetRecoilState(authModalState);
+
+  const handleClick=(type: "login" | "register" | "forgotPassword")=>{
+    setAuthModalState((prev)=>({...prev,type}));
+  }
+  
   const handleRegister = (event: React.FormEvent) => {
     event.preventDefault();
     console.log("Register attempt submitted");
@@ -21,10 +30,7 @@ export default function Register({}: Props) {
       </p>
 
       <div>
-        <label
-          htmlFor="name"
-          className="text-sm font-medium block mb-2 text-gray-300"
-        >
+        <label htmlFor="name" className="text-sm font-medium block mb-2 text-gray-300">
           Full Name
         </label>
         <input
@@ -32,19 +38,13 @@ export default function Register({}: Props) {
           name="name"
           id="name"
           required
-          className="
-            border border-gray-500 rounded-md focus:ring focus:ring-gray-400 focus:border-gray-400
-            block w-full p-3 bg-black text-gray-100 placeholder-gray-500 transition
-          "
-          placeholder="John Doe"
-        />
+          className="border border-gray-500 rounded-md focus:ring focus:ring-gray-400 focus:border-gray-400
+            block w-full p-3 bg-black text-gray-100 placeholder-gray-500 transition"
+          placeholder="John Doe"/>
       </div>
 
       <div>
-        <label
-          htmlFor="email"
-          className="text-sm font-medium block mb-2 text-gray-300"
-        >
+        <label htmlFor="email" className="text-sm font-medium block mb-2 text-gray-300">
           Email Address
         </label>
         <input
@@ -52,10 +52,8 @@ export default function Register({}: Props) {
           name="email"
           id="email"
           required
-          className="
-            border border-gray-500 rounded-md focus:ring focus:ring-gray-400 focus:border-gray-400
-            block w-full p-3 bg-black text-gray-100 placeholder-gray-500 transition
-          "
+          className="border border-gray-500 rounded-md focus:ring focus:ring-gray-400 focus:border-gray-400
+            block w-full p-3 bg-black text-gray-100 placeholder-gray-500 transition"
           placeholder="name@company.com"
         />
       </div>
@@ -90,12 +88,9 @@ export default function Register({}: Props) {
 
       <div className="text-center text-sm text-gray-400 mt-4">
         Already have an account?{" "}
-        <a
-          href="#"
-          className="text-white hover:text-gray-300 font-medium transition"
-        >
+        <button onClick={()=>handleClick("login")} className="text-white hover:text-gray-300 font-medium transition">
           Sign In
-        </a>
+        </button>
       </div>
     </form>
   );

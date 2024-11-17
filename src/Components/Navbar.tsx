@@ -1,11 +1,17 @@
 import Link from "next/link";
 import Image from "next/image";
+import { useSetRecoilState } from "recoil";
+import { authModalState } from "@/Atoms/authModalAtom";
 
 type Props = {}
 
 export default function Navbar({}: Props) {
 
-    const handleClick=()=>{}
+	const setAuthModalState=useSetRecoilState(authModalState);
+
+    const handleClick=()=>{
+		setAuthModalState((prev)=>({...prev,isOpen:true}));
+	}
 
     return (
 		<div className='flex items-center justify-between px-20'>

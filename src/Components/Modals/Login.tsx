@@ -1,8 +1,16 @@
+import { authModalState } from "@/Atoms/authModalAtom";
 import React from "react";
+import { useSetRecoilState } from "recoil";
 
 type Props = {};
 
 export default function Login({}: Props) {
+
+  const setAuthModalState = useSetRecoilState(authModalState);
+
+  const handleClick=(type: "login" | "register" | "forgotPassword")=>{
+    setAuthModalState((prev)=>({...prev,type}));
+  }
     
   const handleLogin = (event: React.FormEvent) => {
     event.preventDefault();
@@ -65,19 +73,16 @@ export default function Login({}: Props) {
       </button>
 
       <div className="text-right mt-4">
-        <a href="#" className="text-sm text-gray-400 hover:text-gray-200 transition">
+        <button onClick={()=>handleClick("forgotPassword")} className="text-sm text-gray-400 hover:text-gray-200 transition">
           Forgot Password?
-        </a>
+        </button>
       </div>
 
       <div className="text-center text-sm text-gray-400 mt-4">
         Not registered?{" "}
-        <a
-          href="#"
-          className="text-white hover:text-gray-300 font-medium transition"
-        >
+        <button onClick={()=>handleClick("register")} className="text-white hover:text-gray-300 font-medium transition">
           Create account
-        </a>
+        </button>
       </div>
     </form>
   );
