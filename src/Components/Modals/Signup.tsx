@@ -1,0 +1,102 @@
+import React from "react";
+
+type Props = {};
+
+export default function Register({}: Props) {
+  const handleRegister = (event: React.FormEvent) => {
+    event.preventDefault();
+    console.log("Register attempt submitted");
+  };
+
+  return (
+    <form
+      className="space-y-6 px-6 py-6 w-full max-w-md mx-auto"
+      onSubmit={handleRegister}
+    >
+      <h3 className="text-2xl font-semibold text-white text-center">
+        Create Your Account!
+      </h3>
+      <p className="text-sm text-gray-400 text-center">
+        Sign up to join <span className="font-semibold text-gray-200">Hacker's Arena</span>
+      </p>
+
+      <div>
+        <label
+          htmlFor="name"
+          className="text-sm font-medium block mb-2 text-gray-300"
+        >
+          Full Name
+        </label>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          required
+          className="
+            border border-gray-500 rounded-md focus:ring focus:ring-gray-400 focus:border-gray-400
+            block w-full p-3 bg-black text-gray-100 placeholder-gray-500 transition
+          "
+          placeholder="John Doe"
+        />
+      </div>
+
+      <div>
+        <label
+          htmlFor="email"
+          className="text-sm font-medium block mb-2 text-gray-300"
+        >
+          Email Address
+        </label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          required
+          className="
+            border border-gray-500 rounded-md focus:ring focus:ring-gray-400 focus:border-gray-400
+            block w-full p-3 bg-black text-gray-100 placeholder-gray-500 transition
+          "
+          placeholder="name@company.com"
+        />
+      </div>
+
+      <div>
+        <label
+          htmlFor="password"
+          className="text-sm font-medium block mb-2 text-gray-300"
+        >
+          Password
+        </label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          required
+          className="
+            border border-gray-500 rounded-md focus:ring focus:ring-gray-400 focus:border-gray-400
+            block w-full p-3 bg-black text-gray-100 placeholder-gray-500 transition
+          "
+          placeholder="••••••••"
+        />
+      </div>
+
+      <button
+        type="submit"
+        className="w-full bg-gray-800 hover:bg-gray-700 text-white font-medium rounded-md
+          py-3 transition-all duration-200"
+      >
+        Register
+      </button>
+
+      <div className="text-center text-sm text-gray-400 mt-4">
+        Already have an account?{" "}
+        <a
+          href="#"
+          className="text-white hover:text-gray-300 font-medium transition"
+        >
+          Sign In
+        </a>
+      </div>
+    </form>
+  );
+}

@@ -10,7 +10,7 @@ export default function Login({}: Props) {
   };
 
   return (
-    <form className="space-y-6 px-6 py-8 w-full max-w-md mx-auto" onSubmit={handleLogin}>
+    <form className="space-y-6 px-6 py-6 w-full max-w-md mx-auto" onSubmit={handleLogin}>
 
       <h3 className="text-2xl font-semibold text-white text-center">
         Welcome Back!

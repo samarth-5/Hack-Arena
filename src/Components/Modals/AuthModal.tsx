@@ -1,12 +1,11 @@
 import { IoClose } from "react-icons/io5";
 import Login from "./Login";
+import Signup from './Signup';
 import React from "react";
 
-type Props = {
-  onClose: () => void;
-};
+type Props = {};
 
-export default function AuthModal({ onClose }: Props) {
+export default function AuthModal({}: Props) {
   return (
     <>
       <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-75"></div>
@@ -15,16 +14,15 @@ export default function AuthModal({ onClose }: Props) {
         <div className="relative w-full h-full mx-auto flex items-center justify-center">
           <div className="bg-gradient-to-b from-gray-800 to-black rounded-xl shadow-lg border border-gray-700 relative w-full mx-6 p-6">
             
-            <div className="flex justify-end mb-4">
+            <div className="flex justify-end">
               <button
                 type="button"
-                onClick={onClose}
                 className="bg-transparent rounded-full text-gray-400 p-2 hover:bg-gray-700 hover:text-white"
               >
                 <IoClose className="h-6 w-6" />
               </button>
             </div>
-			
+
             <Login />
           </div>
         </div>
