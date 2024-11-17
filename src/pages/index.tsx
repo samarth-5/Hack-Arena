@@ -1,6 +1,7 @@
 import Image from "next/image";
 import localFont from "next/font/local";
 import Navbar from "@/Components/Navbar";
+import AuthModal from "@/Components/Modals/AuthModal";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -18,6 +19,7 @@ export default function Home() {
       <main>
         <Navbar />
         Home Page
+        <AuthModal />
       </main>
   );
 }
