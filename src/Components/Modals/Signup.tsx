@@ -40,7 +40,7 @@ export default function Register({}: Props) {
           required
           className="border border-gray-500 rounded-md focus:ring focus:ring-gray-400 focus:border-gray-400
             block w-full p-3 bg-black text-gray-100 placeholder-gray-500 transition"
-          placeholder="John Doe"/>
+          placeholder="Lorem Ipsum"/>
       </div>
 
       <div>
