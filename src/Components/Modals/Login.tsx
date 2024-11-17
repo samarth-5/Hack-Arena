@@ -1,5 +1,8 @@
 import { authModalState } from "@/Atoms/authModalAtom";
-import React from "react";
+import { auth } from "@/firebase/firebase";
+import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { useSetRecoilState } from "recoil";
 
 type Props = {};
@@ -7,15 +10,41 @@ type Props = {};
 export default function Login({}: Props) {
 
   const setAuthModalState = useSetRecoilState(authModalState);
+  const router = useRouter();
 
   const handleClick=(type: "login" | "register" | "forgotPassword")=>{
     setAuthModalState((prev)=>({...prev,type}));
   }
-    
-  const handleLogin = (event: React.FormEvent) => {
+  
+  const [inputs, setInputs] = useState({ email: "", password: "" });
+	
+  const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
+	
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+	};
+
+  const handleLogin = async(event: React.FormEvent) => {
     event.preventDefault();
-    console.log("Login attempt submitted");
+		if (!inputs.email || !inputs.password) 
+    return alert("Please fill all fields!");
+		try {
+			const newUser = await signInWithEmailAndPassword(inputs.email, inputs.password);
+			if (!newUser) 
+      return;
+      setAuthModalState((prev) => ({ ...prev, isOpen: false }));
+			router.push("/");
+		} catch (error: any) {
+			alert(error.message);
+		}
   };
+
+  //console.log(user);
+
+  useEffect(()=>{
+    if(error)
+      alert(error.message);
+  },[error]);
 
   return (
     <form className="space-y-6 px-6 py-6 w-full max-w-md mx-auto" onSubmit={handleLogin}>
@@ -34,7 +63,7 @@ export default function Login({}: Props) {
         >
           Email Address
         </label>
-        <input
+        <input onChange={handleInputChange}
           type="email"
           name="email"
           id="email"
@@ -53,7 +82,7 @@ export default function Login({}: Props) {
           className="text-sm font-medium block mb-2 text-gray-300">
           Password
         </label>
-        <input
+        <input onChange={handleInputChange}
           type="password"
           name="password"
           id="password"
@@ -69,7 +98,7 @@ export default function Login({}: Props) {
       <button type="submit"
              className="w-full bg-gray-800 hover:bg-gray-700 text-white font-medium rounded-md
           py-3 transition-all duration-200">
-        Log In
+        {loading ? "Logging In..." : "Log In"}
       </button>
 
       <div className="text-right mt-4">

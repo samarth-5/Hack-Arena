@@ -44,6 +44,8 @@ export default function Register({}: Props) {
 		} 
   };
 
+  //console.log(user);
+
   useEffect(()=>{
     if(error)
       alert(error.message);
