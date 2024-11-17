@@ -2,6 +2,8 @@ import Image from "next/image";
 import localFont from "next/font/local";
 import Navbar from "@/Components/Navbar";
 import AuthModal from "@/Components/Modals/AuthModal";
+import { useRecoilValue } from "recoil";
+import { authModalState } from "@/Atoms/authModalAtom";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -15,11 +17,14 @@ const geistMono = localFont({
 });
 
 export default function Home() {
+
+  const authModal = useRecoilValue(authModalState);
+  
   return (
       <main>
         <Navbar />
         Home Page
-        <AuthModal />
+        {authModal.isOpen && <AuthModal />}
       </main>
   );
 }
