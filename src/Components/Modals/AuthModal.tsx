@@ -2,6 +2,7 @@ import { IoClose } from "react-icons/io5";
 import Login from "./Login";
 import Signup from './Signup';
 import React from "react";
+import ResetPassword from "./ResetPassword";
 
 type Props = {};
 
@@ -23,7 +24,7 @@ export default function AuthModal({}: Props) {
               </button>
             </div>
 
-            <Login />
+            <ResetPassword />
           </div>
         </div>
       </div>
