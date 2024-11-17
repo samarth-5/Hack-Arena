@@ -1,5 +1,7 @@
 import { authModalState } from "@/Atoms/authModalAtom";
-import React from "react";
+import { auth } from "@/firebase/firebase";
+import React, { useEffect, useState } from "react";
+import { useSendPasswordResetEmail } from "react-firebase-hooks/auth";
 import { useSetRecoilState } from "recoil";
 
 type Props = {};
@@ -12,10 +14,20 @@ export default function ResetPassword({}: Props) {
     setAuthModalState((prev)=>({...prev,type}));
   }
 
-  const handleResetPassword = (event: React.FormEvent) => {
-    event.preventDefault();
-    console.log("Password reset request submitted");
-  };
+  const [email, setEmail] = useState("");
+	const [sendPasswordResetEmail, sending, error] = useSendPasswordResetEmail(auth);
+	const handleResetPassword = async (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		const success = await sendPasswordResetEmail(email);
+		if(success)
+      alert("Email sent!");
+	};
+
+	useEffect(() => {
+		if (error) {
+			alert(error.message);
+		}
+	}, [error]);
 
   return (
     <form className="space-y-6 px-6 py-6 w-full max-w-md mx-auto" onSubmit={handleResetPassword}>
@@ -34,7 +46,7 @@ export default function ResetPassword({}: Props) {
         >
           Email Address
         </label>
-        <input
+        <input onChange={(e) => setEmail(e.target.value)}
           type="email"
           name="email"
           id="email"
