@@ -1,6 +1,9 @@
 import { authModalState } from "@/Atoms/authModalAtom";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { auth } from "@/firebase/firebase";
+import { useRouter } from "next/router";
 
 type Props = {};
 
@@ -11,11 +14,40 @@ export default function Register({}: Props) {
   const handleClick=(type: "login" | "register" | "forgotPassword")=>{
     setAuthModalState((prev)=>({...prev,type}));
   }
+
+  const [inputs, setInputs] = useState({ email: "", name: "", password: "" });
+  const router = useRouter();  
   
-  const handleRegister = (event: React.FormEvent) => {
+  const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth);
+  //console.log(createUserWithEmailAndPassword);
+
+  const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+	};
+  
+  const handleRegister = async(event: React.FormEvent) => {
     event.preventDefault();
-    console.log("Register attempt submitted");
+    if (!inputs.email || !inputs.password || !inputs.name) 
+    return alert("Please fill all fields!");
+    //console.log(inputs);
+    //console.log(auth);
+    try {
+			const newUser = await createUserWithEmailAndPassword(inputs.email, inputs.password);
+      //console.log(newUser);
+			if (!newUser) 
+      return;
+      setAuthModalState((prev) => ({ ...prev, isOpen: false }));
+			router.push("/");
+			//await setDoc(doc(firestore, "users", newUser.user.uid), userData);
+		} catch (error: any) {
+			alert(error.message);
+		} 
   };
+
+  useEffect(()=>{
+    if(error)
+      alert(error.message);
+  },[error]);
 
   return (
     <form
@@ -33,7 +65,7 @@ export default function Register({}: Props) {
         <label htmlFor="name" className="text-sm font-medium block mb-2 text-gray-300">
           Full Name
         </label>
-        <input
+        <input onChange={handleChangeInput}
           type="text"
           name="name"
           id="name"
@@ -47,7 +79,7 @@ export default function Register({}: Props) {
         <label htmlFor="email" className="text-sm font-medium block mb-2 text-gray-300">
           Email Address
         </label>
-        <input
+        <input onChange={handleChangeInput}
           type="email"
           name="email"
           id="email"
@@ -65,7 +97,7 @@ export default function Register({}: Props) {
         >
           Password
         </label>
-        <input
+        <input onChange={handleChangeInput}
           type="password"
           name="password"
           id="password"
@@ -83,7 +115,7 @@ export default function Register({}: Props) {
         className="w-full bg-gray-800 hover:bg-gray-700 text-white font-medium rounded-md
           py-3 transition-all duration-200"
       >
-        Register
+        {loading ? "Registering..." : "Register"}
       </button>
 
       <div className="text-center text-sm text-gray-400 mt-4">
