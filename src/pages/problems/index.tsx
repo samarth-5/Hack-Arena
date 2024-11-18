@@ -19,13 +19,13 @@ export default function ProblemsPage({}: Props) {
 
       <div className="relative overflow-x-auto mx-auto px-4 sm:px-6 pb-10">
         <table className="w-full text-sm text-left text-gray-800 sm:w-10/12 max-w-[1200px] mx-auto bg-white shadow-lg rounded-xl">
-          <thead className="text-s text-black-900 uppercase border-b bg-gray-400">
+          <thead className="text-[16px] text-black-900 uppercase border-b bg-gray-400">
             <tr>
               <th scope="col" className="px-4 py-3 font-semibold text-left">Status</th>
               <th scope="col" className="px-6 py-3 font-semibold text-left">Title</th>
               <th scope="col" className="px-6 py-3 font-semibold text-left">Difficulty</th>
               <th scope="col" className="px-6 py-3 font-semibold text-left">Category</th>
-              <th scope="col" className="px-6 py-3 font-semibold text-left">Solution</th>
+              <th scope="col" className="px-6 py-3 font-semibold text-left">Companies</th>
             </tr>
           </thead>
           <ProblemsTable />

@@ -46,25 +46,24 @@ export default function ProblemsTable({}: Props) {
             } hover:bg-gray-300 transition-all duration-300`}
             key={problem.id}
           >
-            <th className="px-6 py-4 font-medium">
+            <th className="px-6 py-3 font-medium">
               <BsCheckCircle className='text-green-500' fontSize={"18"} width='18' />
             </th>
-            <td className="px-6 py-4">
+            <td className="px-6 py-3">
               
             <Link
-										className='hover:text-blue-600 cursor-pointer'
-										href={`/problems/${problem.id}`}
-									>
+										className='hover:text-blue-600 cursor-pointer text-[15px] font-semibold'
+										href={`/problems/${problem.id}`}>
 										{problem.title}
 									</Link>
 
                 
             </td>
-            <td className={`px-6 py-4 ${difficultyColor} font-semibold`}>
+            <td className={`px-6 py-3 ${difficultyColor} font-semibold`}>
               {problem.difficulty}
             </td>
-            <td className="px-6 py-4 text-black">{problem.category}</td>
-            <td className="px-6 py-4 text-gray-700">
+            <td className="px-6 py-3 font-medium text-[13px] text-black">{problem.category}</td>
+            <td className="px-6 py-3 text-gray-700">
               <div className='flex gap-3'>
                 {renderCompanies(problem.companies)}
               </div>
