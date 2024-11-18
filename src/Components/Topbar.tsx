@@ -1,0 +1,85 @@
+import { authModalState } from '@/Atoms/authModalAtom';
+import { auth } from '@/firebase/firebase';
+import Link from 'next/link';
+import Image from "next/image";
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useSetRecoilState } from 'recoil';
+import Logout from './Buttons/Logout';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { BsList } from 'react-icons/bs';
+
+type Props = {
+    problemPage?: boolean;
+}
+
+export default function Topbar({problemPage}: Props) {
+
+    const [user] = useAuthState(auth);
+
+	const setAuthModalState=useSetRecoilState(authModalState);
+
+    const handleClick=()=>{
+		setAuthModalState((prev)=>({...prev,isOpen:true}));
+	}
+
+    const handleProblemChange=()=>{}
+    
+    return (
+		<div className='flex items-center justify-between px-10'>
+			<Link href='/' className='flex items-center justify-center h-20'>
+				<Image src='/favicon.ico' alt='Hack Arena' height={50} width={50} />
+                <Image src='/logo.png' alt='Hack Arena' height={240} width={240} />
+			</Link>
+            
+            {problemPage && (
+					<div className="flex items-center gap-4 flex-1 justify-center relative right-20">
+                    <div
+                      className="flex items-center justify-center rounded bg-gray-800 text-white hover:bg-gray-900 h-9 w-9 cursor-pointer transition-all duration-200"
+                      onClick={() => handleProblemChange(false)}
+                    >
+                      <FaChevronLeft />
+                    </div>
+                    <Link
+                      href="/"
+                      className="flex items-center gap-2 font-medium max-w-[170px] text-gray-800 hover:text-gray-900 cursor-pointer transition-all duration-200"
+                    >
+                      <div>
+                        <BsList className='text-xl' />
+                      </div>
+                      <p className='text-xl'>Problem List</p>
+                    </Link>
+                    <div
+                      className="flex items-center justify-center rounded bg-gray-800 text-white hover:bg-gray-900 h-9 w-9 cursor-pointer transition-all duration-200"
+                      onClick={() => handleProblemChange(true)}
+                    >
+                      <FaChevronRight />
+                    </div>
+                  </div>
+                  
+				)}
+
+			<div className='flex items-center relative right-20'>
+				{!user && (<button className='bg-black font-semibold text-white text-lg p-2 px-5 rounded-3xl hover:text-black hover:bg-white hover:outline transition-all duration-300 ease-in-out' 
+                        onClick={handleClick}>
+					Sign In
+				</button>)}
+				{
+					user && (<div className='cursor-pointer group relative mr-5'>
+						<Image src="/avatar.png"
+                               alt="Avatar"
+                               width={45}
+                               height={45}
+                               className="rounded-full border border-black" />
+                        <div  className="absolute top-10 left-2/4 -translate-x-2/4 bg-dark-layer-1 text-brand-orange p-2 
+                                          rounded-full border border-black shadow-lg z-40 
+                                         group-hover:scale-100 scale-0 group-hover:bg-black group-hover:text-white
+                                         transition-all duration-300 ease-in-out">
+                            <p className="text-sm text-center">{user.email}</p>
+                        </div>
+					</div>)					
+				}
+				{user && <Logout />}
+			</div>
+		</div>
+	);
+}
