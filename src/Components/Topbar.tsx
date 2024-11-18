@@ -40,7 +40,7 @@ export default function Topbar({problemPage}: Props) {
                       <FaChevronLeft />
                     </div>
                     <Link
-                      href="/"
+                      href="/problems"
                       className="flex items-center gap-2 font-medium max-w-[170px] text-gray-800 hover:text-gray-900 cursor-pointer transition-all duration-200"
                     >
                       <div>

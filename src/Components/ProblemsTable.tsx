@@ -51,7 +51,13 @@ export default function ProblemsTable({}: Props) {
             </th>
             <td className="px-6 py-4">
               
-                  {problem.title}
+            <Link
+										className='hover:text-blue-600 cursor-pointer'
+										href={`/problems/${problem.id}`}
+									>
+										{problem.title}
+									</Link>
+
                 
             </td>
             <td className={`px-6 py-4 ${difficultyColor} font-semibold`}>
