@@ -4,6 +4,7 @@ import { useSetRecoilState } from "recoil";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/firebase";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 type Props = {};
 
@@ -28,7 +29,8 @@ export default function Register({}: Props) {
   const handleRegister = async(event: React.FormEvent) => {
     event.preventDefault();
     if (!inputs.email || !inputs.password || !inputs.name) 
-    return alert("Please fill all fields!");
+    return toast.error("Please fill all fields!", { position: "top-center", autoClose: 3000, theme: "dark" });
+
     //console.log(inputs);
     //console.log(auth);
     try {
@@ -36,11 +38,12 @@ export default function Register({}: Props) {
       //console.log(newUser);
 			if (!newUser) 
       return;
+      toast.success("Account created successfully!", { position: "top-center", autoClose: 3000, theme: "dark" });
       setAuthModalState((prev) => ({ ...prev, isOpen: false }));
 			router.push("/");
 			//await setDoc(doc(firestore, "users", newUser.user.uid), userData);
 		} catch (error: any) {
-			alert(error.message);
+			toast.error(error.message, { position: "top-center", autoClose: 3000, theme: "dark" });
 		} 
   };
 
@@ -48,7 +51,7 @@ export default function Register({}: Props) {
 
   useEffect(()=>{
     if(error)
-      alert(error.message);
+      toast.error(error.message, { position: "top-center", autoClose: 3000, theme: "dark" });
   },[error]);
 
   return (
