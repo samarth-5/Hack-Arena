@@ -8,6 +8,18 @@
 	margin: 0;
 }
 
+@layer components {
+	.preferenceBtn {
+		@apply relative rounded-full px-3 py-1.5 font-medium items-center transition-all focus:outline-none inline-flex  ml-auto p-1 mr-2 hover:bg-dark-fill-3;
+	}
+
+	.preferenceBtn-tooltip {
+		@apply absolute w-auto p-2 text-sm m-2  min-w-max translate-x-3  right-0 top-5 z-10 rounded-full shadow-md
+		text-dark-layer-2 bg-gray-200  origin-center scale-0 transition-all duration-100 ease-linear group-hover:scale-100;
+	}
+}
+
+
 /* dark  scrollbar */
 ::-webkit-scrollbar {
 	width: 0.5rem;

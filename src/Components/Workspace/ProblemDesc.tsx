@@ -10,7 +10,7 @@ export default function ProblemDesc({}: Props) {
     <div className="h-screen bg-white overflow-hidden"> {/* Ensure no scroll for the full page */}
       {/* TAB */}
       <div className="flex h-11 w-full items-center pt-2 bg-gray-900 text-white overflow-x-hidden">
-        <div className="bg-white rounded-t-[5px] px-5 py-[10px] text-xs cursor-pointer text-gray-900 hover:bg-gray-200">
+        <div className="font-medium bg-white rounded-t-xl px-5 py-[10px] text-xs cursor-pointer text-black hover:bg-gray-200">
           Description
         </div>
       </div>
@@ -23,9 +23,7 @@ export default function ProblemDesc({}: Props) {
               <div className="flex-1 mr-2 text-lg text-gray-900 font-medium">1. Two Sum</div>
             </div>
             <div className="flex items-center mt-3">
-              <div
-                className="text-gray-600 bg-gray-100 inline-block rounded-[21px] px-2.5 py-1 text-xs font-medium capitalize"
-              >
+              <div className="text-gray-600 bg-gray-100 inline-block rounded-[21px] px-2.5 py-1 text-xs font-medium capitalize">
                 Easy
               </div>
               <div className="rounded p-[3px] ml-4 text-lg transition-colors duration-200 text-green-600 hover:text-green-800">
