@@ -7,6 +7,7 @@ import { useSetRecoilState } from 'recoil';
 import Logout from './Buttons/Logout';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { BsList } from 'react-icons/bs';
+import Timer from './Timer';
 
 type Props = {
     problemPage?: boolean;
@@ -22,21 +23,20 @@ export default function Topbar({problemPage}: Props) {
 		setAuthModalState((prev)=>({...prev,isOpen:true}));
 	}
 
-    const handleProblemChange=()=>{}
+    const handleProblemChange=(isForward: boolean)=>{}
     
     return (
-		<div className='flex items-center justify-between px-10'>
-			<Link href='/' className='flex items-center justify-center h-20'>
-				<Image src='/favicon.ico' alt='Hack Arena' height={50} width={50} />
+		  <div className='flex items-center justify-between px-20'>
+			  <Link href='/' className='flex items-center justify-center h-20'>
+				    <Image src='/favicon.ico' alt='Hack Arena' height={50} width={50} />
                 <Image src='/logo.png' alt='Hack Arena' height={240} width={240} />
-			</Link>
+			  </Link>
             
             {problemPage && (
-					<div className="flex items-center gap-4 flex-1 justify-center relative right-20">
+					<div className="flex absolute left-20 items-center gap-4 flex-1 justify-center right-10">
                     <div
                       className="flex items-center justify-center rounded bg-gray-800 text-white hover:bg-gray-900 h-9 w-9 cursor-pointer transition-all duration-200"
-                      onClick={() => handleProblemChange(false)}
-                    >
+                      onClick={() => handleProblemChange(false)}>
                       <FaChevronLeft />
                     </div>
                     <Link
@@ -58,13 +58,14 @@ export default function Topbar({problemPage}: Props) {
                   
 				)}
 
-			<div className='flex items-center relative right-20'>
+			<div className='flex gap-4 items-center relative'>
 				{!user && (<button className='bg-black font-semibold text-white text-lg p-2 px-5 rounded-3xl hover:text-black hover:bg-white hover:outline transition-all duration-300 ease-in-out' 
                         onClick={handleClick}>
 					Sign In
 				</button>)}
+        {user && problemPage && (<div className="bg-black text-white cursor-pointer rounded-full hover:bg-gray-800 transition-all duration-200"><Timer /></div>)}
 				{
-					user && (<div className='cursor-pointer group relative mr-5'>
+					user && (<div className='cursor-pointer group relative'>
 						<Image src="/avatar.png"
                                alt="Avatar"
                                width={45}
