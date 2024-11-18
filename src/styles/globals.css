@@ -36,7 +36,7 @@
 /* CODE EDITOR*/
 .cm-scroller,
 .cm-gutters {
-	background-color: #282828 !important;
+	background-color: white!important;
 }
 .cm-focused {
 	outline: none !important;
