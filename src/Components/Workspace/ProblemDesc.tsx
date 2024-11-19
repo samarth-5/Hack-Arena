@@ -7,7 +7,7 @@ type Props = {}
 
 export default function ProblemDesc({}: Props) {
   return (
-    <div className="h-screen bg-white overflow-hidden"> {/* Ensure no scroll for the full page */}
+    <div className="bg-white"> 
       {/* TAB */}
       <div className="flex h-11 w-full items-center pt-2 bg-gray-900 text-white overflow-x-hidden">
         <div className="font-medium bg-white rounded-t-xl px-5 py-[10px] text-xs cursor-pointer text-black hover:bg-gray-200">

@@ -6,15 +6,15 @@ import Playground from './Playground/Playground';
 type Props = {};
 
 export default function Workspace({}: Props) {
-  useEffect(() => {
-    // Disable scrolling when on the Workspace page
-    document.body.style.overflow = 'hidden';
+  // useEffect(() => {
+  //   // Disable scrolling when on the Workspace page
+  //   document.body.style.overflow = 'hidden';
 
-    // Re-enable scrolling when leaving the page
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, []);
+  //   // Re-enable scrolling when leaving the page
+  //   return () => {
+  //     document.body.style.overflow = '';
+  //   };
+  // }, []);
 
   return (
     <>
