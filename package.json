@@ -12,6 +12,7 @@
     "@codemirror/lang-javascript": "^6.2.2",
     "@uiw/codemirror-theme-noctis-lilac": "^4.23.6",
     "@uiw/react-codemirror": "^4.23.6",
+    "assert": "^2.1.0",
     "firebase": "^11.0.2",
     "next": "15.0.3",
     "react": "^18.3.1",

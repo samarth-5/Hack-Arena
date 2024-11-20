@@ -9,13 +9,18 @@ import EditorFooter from './EditorFooter';
 type Props = {}
 
 export default function Playground({}: Props) {
+  
+  const boilerPlate = `function twoSum(nums,target){
+    //Write your code here
+  }`;
+
   return (
     <div className='flex flex-col bg-white relative overflow-x-hidden'>
         <PreferenceNav />
         <Split className='h-[calc(100vh-94px)]' direction='vertical' sizes={[50, 50]} minSize={60}>
 				  <div className='w-full overflow-auto'>
 					  <CodeMirror
-						  value="Hello World"
+						  value={boilerPlate}
 				  		theme={noctisLilac}
 					  	extensions={[javascript()]}
 						  style={{ fontSize: 16 }}
