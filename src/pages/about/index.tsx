@@ -3,10 +3,16 @@ import Link from 'next/link';
 import Image from "next/image";
 import { FaGithub, FaGlobe, FaInstagram, FaLinkedin } from 'react-icons/fa';
 import { SiLeetcode } from 'react-icons/si';
+import { useRecoilValue } from 'recoil';
+import { authModalState } from '@/Atoms/authModalAtom';
+import AuthModal from '@/Components/Modals/AuthModal';
 
 type Props = {}
 
 export default function AboutPage({}: Props) {
+
+  const authModal = useRecoilValue(authModalState);
+
   return (
     <>
       <Navbar />
@@ -34,6 +40,7 @@ export default function AboutPage({}: Props) {
           <Link target='_blank' href='https://www.instagram.com/samarth123_/' className='hover:scale-150 duration-500'><FaInstagram size={25} className='hover:text-black' /></Link>
         </div>
       </section>
+      {authModal.isOpen && <AuthModal />}
     </>
   )
 }
