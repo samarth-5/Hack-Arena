@@ -64,7 +64,7 @@ export default function Home() {
       </section>
 
       <footer className="mt-20 py-10 bg-black text-gray-200 text-center">
-        <p className="text-sm">Developed by @Samarth. All rights reserved.</p>
+        <p className="text-sm">© 2025 Developed by @<Link href='/about' className="font-semibold hover:underline">Samarth</Link>. All rights reserved.</p>
       </footer>
 
       {authModal.isOpen && <AuthModal />}
