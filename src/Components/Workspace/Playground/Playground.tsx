@@ -5,14 +5,14 @@ import CodeMirror from "@uiw/react-codemirror";
 import { noctisLilac } from '@uiw/codemirror-theme-noctis-lilac';
 import { javascript } from '@codemirror/lang-javascript';
 import EditorFooter from './EditorFooter';
+import { Problem } from '@/Utils/types/problem';
 
-type Props = {}
+type Props = {
+  problem: Problem
+}
 
-export default function Playground({}: Props) {
+export default function Playground({problem}: Props) {
   
-  const boilerPlate = `function twoSum(nums,target){
-    //Write your code here
-  }`;
 
   return (
     <div className='flex flex-col bg-white relative overflow-x-hidden'>
@@ -20,7 +20,7 @@ export default function Playground({}: Props) {
         <Split className='h-[calc(100vh-94px)]' direction='vertical' sizes={[50, 50]} minSize={60}>
 				  <div className='w-full overflow-auto'>
 					  <CodeMirror
-						  value={boilerPlate}
+						  value={problem.starterCode}
 				  		theme={noctisLilac}
 					  	extensions={[javascript()]}
 						  style={{ fontSize: 16 }}

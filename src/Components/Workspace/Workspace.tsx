@@ -24,7 +24,7 @@ export default function Workspace({problem}: Props) {
       <div className="border-t-2 border-black"></div>
       <Split className="split" minSize={0}>
         <ProblemDesc problem={problem} />
-        <Playground />
+        <Playground problem={problem} />
       </Split>
     </>
   );

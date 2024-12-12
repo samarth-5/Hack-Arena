@@ -47,75 +47,51 @@ export default function ProblemDesc({problem}: Props) {
 
             {/* Problem Statement(paragraphs) */}
             <div className="text-gray-900 text-sm">
-              {/* <p className="mt-3">
-                Given an array of integers <code>nums</code> and an integer <code>target</code>, return
-                <em>indices of the two numbers such that they add up to</em> <code>target</code>.
-              </p>
-              <p className="mt-3">
-                You may assume that each input would have <strong>exactly one solution</strong>, and you
-                may not use the same element twice.
-              </p>
-              <p className="mt-3">You can return the answer in any order.</p> */}
               <div dangerouslySetInnerHTML={{__html: problem.problemStatement}} />
             </div>
 
-            {/* Examples */}
-            <div className="mt-4">
-              {/* Example 1 */}
-              <div>
-                <p className="font-medium text-gray-900">Example 1: </p>
-                <div className="example-card bg-gray-100 p-3 rounded-lg shadow-md">
-                  <pre>
-                    <strong className="text-gray-900">Input: </strong> nums = [2,7,11,15], target = 9
-                    <br />
-                    <strong>Output:</strong> [0,1] <br />
-                    <strong>Explanation:</strong> Because nums[0] + nums[1] == 9, we return [0, 1].
-                  </pre>
-                </div>
-              </div>
+            <div className="mt-4 flex flex-col items-start">
+              {problem.examples.map((example, index) => (
+                <div key={example.id} className="mb-6 w-full">
+                  {/* Example Header */}
+                  <p className="font-bold text-black bg-white py-2 rounded-t-md">
+                    Example {index + 1}
+                  </p>
 
-              {/* Example 2 */}
-              <div>
-                <p className="font-medium text-gray-900">Example 2: </p>
-                <div className="example-card bg-gray-100 p-3 rounded-lg shadow-md">
-                  <pre>
-                    <strong className="text-gray-900">Input: </strong> nums = [3,2,4], target = 6
-                    <br />
-                    <strong>Output:</strong> [1,2] <br />
-                    <strong>Explanation:</strong> Because nums[1] + nums[2] == 6, we return [1, 2].
-                  </pre>
-                </div>
-              </div>
+                  {/* Optional Example Image */}
+                  {example.img && (
+                    <img
+                      src={example.img}
+                      alt={`Example ${index + 1}`}
+                      className="rounded-md mb-4 shadow-lg"
+                    />
+                  )}
 
-              {/* Example 3 */}
-              <div>
-                <p className="font-medium text-gray-900">Example 3: </p>
-                <div className="example-card bg-gray-100 p-3 rounded-lg shadow-md">
-                  <pre>
-                    <strong className="text-gray-900">Input: </strong> nums = [3,3], target = 6
-                    <br />
-                    <strong>Output:</strong> [0,1] <br />
-                  </pre>
+                  {/* Example Content Card */}
+                  <div className="example-card bg-white text-black p-4 rounded-b-md shadow-md border border-black">
+                    <pre className="text-sm">
+                      <strong>Input:</strong> {example.inputText}
+                      <br />
+                      <strong>Output:</strong> {example.outputText}
+                      <br />
+                      {example.explanation && (
+                        <>
+                          <strong>Explanation:</strong> {example.explanation}
+                        </>
+                      )}
+                    </pre>
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
 
+
             {/* Constraints */}
-            <div className="my-5">
-              <div className="text-gray-900 text-sm font-medium">Constraints:</div>
-              <ul className="text-gray-900 ml-5 list-disc">
-                <li className="mt-2">
-                  <code>2 ≤ nums.length ≤ 10</code>
-                </li>
-                <li className="mt-2">
-                  <code>-10 ≤ nums[i] ≤ 10</code>
-                </li>
-                <li className="mt-2">
-                  <code>-10 ≤ target ≤ 10</code>
-                </li>
-                <li className="mt-2 text-sm">
-                  <strong>Only one valid answer exists.</strong>
-                </li>
+            {/* Constraints */}
+            <div className='my-8 pb-4'>
+              <div className='text-black text-sm font-medium'>Constraints:</div>
+              <ul className='text-black ml-5 list-disc'>
+                <div dangerouslySetInnerHTML={{ __html: problem.constraints }} />
               </ul>
             </div>
           </div>
