@@ -2,10 +2,13 @@ import { useEffect } from 'react';
 import Split from 'react-split';
 import ProblemDesc from './ProblemDesc';
 import Playground from './Playground/Playground';
+import { Problem } from '@/pages/problems/problems';
 
-type Props = {};
+type Props = {
+  problem: Problem
+};
 
-export default function Workspace({}: Props) {
+export default function Workspace({problem}: Props) {
   // useEffect(() => {
   //   // Disable scrolling when on the Workspace page
   //   document.body.style.overflow = 'hidden';
@@ -20,7 +23,7 @@ export default function Workspace({}: Props) {
     <>
       <div className="border-t-2 border-black"></div>
       <Split className="split" minSize={0}>
-        <ProblemDesc />
+        <ProblemDesc problem={problem} />
         <Playground />
       </Split>
     </>

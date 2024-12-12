@@ -1,11 +1,14 @@
+import { Problem } from '@/Utils/types/problem';
 import React from 'react'
 import { AiFillDislike, AiFillLike } from 'react-icons/ai';
 import { BsCheck2Circle } from 'react-icons/bs';
 import { TiStarOutline } from 'react-icons/ti';
 
-type Props = {}
+type Props = {
+  problem: Problem
+}
 
-export default function ProblemDesc({}: Props) {
+export default function ProblemDesc({problem}: Props) {
   return (
     <div className="bg-white"> 
       {/* TAB */}
@@ -20,7 +23,7 @@ export default function ProblemDesc({}: Props) {
           {/* Problem heading */}
           <div className="w-full">
             <div className="flex space-x-4">
-              <div className="flex-1 mr-2 text-lg text-gray-900 font-medium">1. Two Sum</div>
+              <div className="flex-1 mr-2 text-lg text-gray-900 font-medium">{problem?.title}</div>
             </div>
             <div className="flex items-center mt-3">
               <div className="text-gray-600 bg-gray-100 inline-block rounded-[21px] px-2.5 py-1 text-xs font-medium capitalize">
@@ -44,7 +47,7 @@ export default function ProblemDesc({}: Props) {
 
             {/* Problem Statement(paragraphs) */}
             <div className="text-gray-900 text-sm">
-              <p className="mt-3">
+              {/* <p className="mt-3">
                 Given an array of integers <code>nums</code> and an integer <code>target</code>, return
                 <em>indices of the two numbers such that they add up to</em> <code>target</code>.
               </p>
@@ -52,7 +55,8 @@ export default function ProblemDesc({}: Props) {
                 You may assume that each input would have <strong>exactly one solution</strong>, and you
                 may not use the same element twice.
               </p>
-              <p className="mt-3">You can return the answer in any order.</p>
+              <p className="mt-3">You can return the answer in any order.</p> */}
+              <div dangerouslySetInnerHTML={{__html: problem.problemStatement}} />
             </div>
 
             {/* Examples */}
