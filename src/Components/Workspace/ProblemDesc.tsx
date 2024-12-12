@@ -85,8 +85,6 @@ export default function ProblemDesc({problem}: Props) {
               ))}
             </div>
 
-
-            {/* Constraints */}
             {/* Constraints */}
             <div className='my-8 pb-4'>
               <div className='text-black text-sm font-medium'>Constraints:</div>

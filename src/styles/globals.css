@@ -82,3 +82,26 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 } */
+
+.example-card {
+	background-color: white;
+	color: black;
+	border-radius: 0.375rem;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+	border: 1px solid black; 
+	overflow-wrap: break-word;
+	word-wrap: break-word; 
+	white-space: normal; 
+  }
+  
+  .example-card pre {
+	margin: 0; 
+	font-size: 0.875rem; 
+	white-space: normal; 
+  }
+  
+  .example-card strong {
+	display: inline-block; 
+	margin-bottom: 0.5rem; 
+  }
+  
