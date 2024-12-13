@@ -26,10 +26,10 @@ export default function Topbar({problemPage}: Props) {
     const handleProblemChange=(isForward: boolean)=>{}
     
     return (
-		  <div className='flex items-center justify-between px-20'>
-			  <Link href='/' className='flex items-center justify-center h-20'>
-				    <Image src='/favicon.ico' alt='Hack Arena' height={50} width={50} />
-                <Image src='/logo.png' alt='Hack Arena' height={240} width={240} />
+		  <div className='flex items-center justify-between px-5 h-12'>
+			  <Link href='/' className='flex items-center justify-center'>
+				    <Image src='/favicon.ico' alt='Hack Arena' height={30} width={30} />
+            <Image src='/logo.png' alt='Hack Arena' height={150} width={150} />
 			  </Link>
             
             {problemPage && (
@@ -58,8 +58,8 @@ export default function Topbar({problemPage}: Props) {
                   
 				)}
 
-			<div className='flex gap-4 items-center relative'>
-				{!user && (<button className='bg-black font-semibold text-white text-lg p-2 px-5 rounded-3xl hover:text-black hover:bg-white hover:outline transition-all duration-300 ease-in-out' 
+			<div className='flex items-center relative'>
+				{!user && (<button className='bg-black font-semibold text-white text-md p-1 px-3 rounded-3xl hover:text-black hover:bg-white hover:outline transition-all duration-300 ease-in-out' 
                         onClick={handleClick}>
 					Sign In
 				</button>)}

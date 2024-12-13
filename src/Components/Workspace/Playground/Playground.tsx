@@ -18,7 +18,7 @@ export default function Playground({problem}: Props) {
   return (
     <div className='flex flex-col bg-white relative overflow-x-hidden'>
         <PreferenceNav />
-        <Split className='h-[calc(100vh-94px)]' direction='vertical' sizes={[50, 50]} minSize={60}>
+        <Split className='h-full' direction='vertical' sizes={[50, 50]} minSize={60}>
 				  <div className='w-full overflow-auto'>
 					  <CodeMirror
 						  value={problem.starterCode}

@@ -19,8 +19,8 @@ export default function Navbar({}: Props) {
 	}
 
     return (
-		<div className='flex items-center justify-between px-20'>
-			<Link href='/' className='flex items-center justify-center h-20'>
+		<div className='flex items-center justify-between px-20 h-20'>
+			<Link href='/' className='flex items-center justify-center'>
 				<Image src='/favicon.ico' alt='Hack Arena' height={50} width={50} />
                 <Image src='/logo.png' alt='Hack Arena' height={240} width={240} />
 			</Link>
