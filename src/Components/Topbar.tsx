@@ -2,12 +2,14 @@ import { authModalState } from '@/Atoms/authModalAtom';
 import { auth } from '@/firebase/firebase';
 import Link from 'next/link';
 import Image from "next/image";
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
 import { useSetRecoilState } from 'recoil';
 import Logout from './Buttons/Logout';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { BsList } from 'react-icons/bs';
 import Timer from './Timer';
+import { toast } from 'react-toastify';
+import { FiLogOut } from 'react-icons/fi';
 
 type Props = {
     problemPage?: boolean;
@@ -17,13 +19,20 @@ export default function Topbar({problemPage}: Props) {
 
     const [user] = useAuthState(auth);
 
-	const setAuthModalState=useSetRecoilState(authModalState);
+	  const setAuthModalState=useSetRecoilState(authModalState);
 
     const handleClick=()=>{
-		setAuthModalState((prev)=>({...prev,isOpen:true}));
-	}
+		  setAuthModalState((prev)=>({...prev,isOpen:true}));
+	  }
 
     const handleProblemChange=(isForward: boolean)=>{}
+
+    const [signOut, loading, error] = useSignOut(auth);
+
+	  const handleLogout = () => {
+		  signOut();
+		  toast.success("User logged out successfully!", { position: "top-center", autoClose: 3000, theme: "dark" });
+	  };
     
     return (
 		  <div className='flex items-center justify-between px-5 h-12'>
@@ -32,7 +41,7 @@ export default function Topbar({problemPage}: Props) {
             <Image src='/logo.png' alt='Hack Arena' height={150} width={150} />
 			  </Link>
             
-            {problemPage && (
+        {problemPage && (
 					<div className="flex absolute left-20 items-center gap-4 flex-1 justify-center right-10">
                     <div
                       className="flex items-center justify-center rounded bg-gray-800 text-white hover:bg-gray-900 h-9 w-9 cursor-pointer transition-all duration-200"
@@ -58,18 +67,19 @@ export default function Topbar({problemPage}: Props) {
                   
 				)}
 
-			<div className='flex items-center relative'>
+			<div className='flex gap-2 items-center relative'>
 				{!user && (<button className='bg-black font-semibold text-white text-md p-1 px-3 rounded-3xl hover:text-black hover:bg-white hover:outline transition-all duration-300 ease-in-out' 
                         onClick={handleClick}>
 					Sign In
 				</button>)}
-        {user && problemPage && (<div className="bg-black text-white cursor-pointer rounded-full hover:bg-gray-800 transition-all duration-200"><Timer /></div>)}
-				{
+        {user && problemPage && (
+          <div className="bg-black text-white cursor-pointer rounded-full hover:bg-gray-800 transition-all duration-200"><Timer /></div>)}
+				  {
 					user && (<div className='cursor-pointer group relative'>
 						<Image src="/avatar.png"
                                alt="Avatar"
-                               width={45}
-                               height={45}
+                               width={35}
+                               height={35}
                                className="rounded-full border border-black" />
                         <div  className="absolute top-10 left-2/4 -translate-x-2/4 bg-dark-layer-1 text-brand-orange p-2 
                                           rounded-full border border-black shadow-lg z-40 
@@ -79,7 +89,12 @@ export default function Topbar({problemPage}: Props) {
                         </div>
 					</div>)					
 				}
-				{user && <Logout />}
+				{user && (
+          <button className="bg-black text-white py-[7px] px-[7px] cursor-pointer rounded-full hover:bg-gray-800 transition-all duration-200"
+                onClick={handleLogout}>
+                <FiLogOut className="text-xl" />
+          </button>
+        )}
 			</div>
 		</div>
 	);

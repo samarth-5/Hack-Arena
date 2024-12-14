@@ -13,7 +13,7 @@ type Props = {
 
 export default function QuestionPage({problem}: Props) {
 
-  console.log(problem);
+  //console.log(problem);
 
   const authModal = useRecoilValue(authModalState);
     

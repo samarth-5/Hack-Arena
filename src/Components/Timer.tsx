@@ -43,7 +43,7 @@ export default function Timer({}: Props) {
 				</div>
 			) : (
 				<div
-					className='flex items-center px-3 py-3 rounded cursor-pointer'
+					className='flex items-center px-[6px] py-[6px] rounded cursor-pointer'
 					onClick={() => setShowTimer(true)}
 				>
 					<svg
