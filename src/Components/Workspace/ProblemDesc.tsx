@@ -1,4 +1,4 @@
-import { firestore } from '@/firebase/firebase';
+import { auth, firestore } from '@/firebase/firebase';
 import { DBProblem, Problem } from '@/Utils/types/problem';
 import { doc, getDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
@@ -7,6 +7,7 @@ import { BsCheck2Circle } from 'react-icons/bs';
 import { TiStarOutline } from 'react-icons/ti';
 import CircleSkeleton from "@/Components/Skeletons/CircleSkeleton";
 import RectangleSkeleton from "@/Components/Skeletons/RectangleSkeleton";
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 
 type Props = {
@@ -16,6 +17,9 @@ type Props = {
 export default function ProblemDesc({problem}: Props) {
 
   const { currentProblem, loading, problemDifficultyClass, setCurrentProblem } = useGetCurrentProblem(problem.id);
+  const { liked, disliked, solved, setData, starred } = useGetUsersDataOnProblem(problem.id);
+
+  const handleLike = ()=>{}
 
   return (
     <div className="bg-white"> 
@@ -52,8 +56,9 @@ export default function ProblemDesc({problem}: Props) {
               <div className="rounded p-[3px] ml-4 text-lg transition-colors duration-200 text-green-600 hover:text-green-800">
                 <BsCheck2Circle />
               </div>
-              <div className="flex items-center cursor-pointer hover:bg-gray-200 space-x-1 rounded p-[3px] ml-4 text-lg transition-colors duration-200 text-gray-600 hover:text-gray-800">
-                <AiFillLike />
+              <div onClick={handleLike} className="flex items-center cursor-pointer hover:bg-gray-200 space-x-1 rounded p-[3px] ml-4 text-lg transition-colors duration-200 text-gray-600 hover:text-gray-800">
+                {liked && <AiFillLike className='text-dark-blue-s' />}
+								{!liked && <AiFillLike />}
                 <span className="text-xs">{currentProblem.likes}</span>
               </div>
               <div className="flex items-center cursor-pointer hover:bg-gray-200 space-x-1 rounded p-[3px] ml-4 text-lg transition-colors duration-200 text-gray-600 hover:text-gray-800">
@@ -149,4 +154,32 @@ function useGetCurrentProblem(problemId: string) {
 	}, [problemId]);
 
 	return { currentProblem, loading, problemDifficultyClass, setCurrentProblem };
+}
+
+function useGetUsersDataOnProblem(problemId: string) {
+	const [data, setData] = useState({ liked: false, disliked: false, starred: false, solved: false });
+	const [user] = useAuthState(auth);
+
+	useEffect(() => {
+		const getUsersDataOnProblem = async () => {
+			const userRef = doc(firestore, "users", user!.uid);
+			const userSnap = await getDoc(userRef);
+			if (userSnap.exists()) {
+				const data = userSnap.data();
+				const { solvedProblems, likedProblems, dislikedProblems, starredProblems } = data;
+				setData({
+					liked: likedProblems.includes(problemId), 
+					disliked: dislikedProblems.includes(problemId),
+					starred: starredProblems.includes(problemId),
+					solved: solvedProblems.includes(problemId),
+				});
+			}
+		};
+
+		if (user) 
+    getUsersDataOnProblem();
+		return () => setData({ liked: false, disliked: false, starred: false, solved: false });
+	}, [problemId, user]);
+
+	return { ...data, setData };
 }
