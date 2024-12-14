@@ -1,13 +1,20 @@
+import { firestore } from '@/firebase/firebase';
 import { problems } from '@/pages/problems/problems';
+import { DBProblem } from '@/Utils/types/problem';
+import { collection, getDocs, orderBy, query } from 'firebase/firestore';
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsCheckCircle } from 'react-icons/bs';
 import { FaGoogle, FaFacebook, FaAmazon, FaApple, FaMicrosoft, FaLinkedin, FaSnapchat } from 'react-icons/fa';
 import { SiAdobe, SiUber } from "react-icons/si";
 
-type Props = {};
+type Props = {
+  setLoadingProblems: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
-export default function ProblemsTable({}: Props) {
+export default function ProblemsTable({ setLoadingProblems }: Props) {
+
+    const problems = useGetProblems(setLoadingProblems);
 
     const iconMap: Record<string, JSX.Element> = {
         FaGoogle: <FaGoogle size={20} />,
@@ -50,22 +57,31 @@ export default function ProblemsTable({}: Props) {
               <BsCheckCircle className='text-green-500' fontSize={"18"} width='18' />
             </th>
             <td className="px-6 py-3">
-              
-            <Link
+                  {problem.link ? (
+									<Link
+										href={problem.link}
 										className='hover:text-blue-600 cursor-pointer text-[15px] font-semibold'
-										href={`/problems/${problem.id}`}>
+										target='_blank'
+									>
 										{problem.title}
 									</Link>
-
-                
+								) : (
+									<Link
+										className='hover:text-blue-600 cursor-pointer text-[15px] font-semibold'
+										href={`/problems/${problem.id}`}
+									>
+										{problem.title}
+									</Link>
+								)}
             </td>
+
             <td className={`px-6 py-3 ${difficultyColor} font-semibold`}>
               {problem.difficulty}
             </td>
             <td className="px-6 py-3 font-medium text-[13px] text-black">{problem.category}</td>
             <td className="px-6 py-3 text-gray-700">
               <div className='flex gap-3'>
-                {renderCompanies(problem.companies)}
+                {/* {renderCompanies(problem.companies)} */}
               </div>
             </td>
           </tr>
@@ -73,4 +89,27 @@ export default function ProblemsTable({}: Props) {
       })}
     </tbody>
   );
+}
+
+function useGetProblems(setLoadingProblems: React.Dispatch<React.SetStateAction<boolean>>) {
+	const [problems, setProblems] = useState<DBProblem[]>([]);
+
+	useEffect(() => {
+		const getProblems = async () => {
+			// fetching data logic
+			setLoadingProblems(true);
+			const q = query(collection(firestore, "problems"), orderBy("order", "asc"));
+			const querySnapshot = await getDocs(q);
+			const tmp: DBProblem[] = [];
+			querySnapshot.forEach((doc) => {
+				tmp.push({ id: doc.id, ...doc.data() } as DBProblem);
+			});
+      //console.log(tmp);
+			setProblems(tmp);
+			setLoadingProblems(false);
+		};
+
+		getProblems();
+	}, [setLoadingProblems]);
+	return problems;
 }

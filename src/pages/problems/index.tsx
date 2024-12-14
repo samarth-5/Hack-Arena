@@ -2,8 +2,8 @@ import { authModalState } from '@/Atoms/authModalAtom';
 import AuthModal from '@/Components/Modals/AuthModal';
 import Navbar from '@/Components/Navbar';
 import ProblemsTable from '@/Components/ProblemsTable';
-import { firestore } from '@/firebase/firebase';
-import { doc, setDoc } from 'firebase/firestore';
+// import { firestore } from '@/firebase/firebase';
+// import { doc, setDoc } from 'firebase/firestore';
 import React, { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { problems } from './problems';
@@ -13,32 +13,34 @@ type Props = {};
 export default function ProblemsPage({}: Props) {
   const authModal = useRecoilValue(authModalState);
 
-  const [inputs,setInputs]=useState({
-    id:'',
-    title:'',
-    difficulty:'',
-    category:'',
-    link:'',
-    order: 0,
-    likes: 0,
-    dislikes: 0,
-  });
+  const [loadingProblems, setLoadingProblems] = useState(true);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>)=>{
-    setInputs({...inputs,[e.target.name] : e.target.value});
-  }
-  console.log(inputs);
+  // const [inputs,setInputs]=useState({
+  //   id:'',
+  //   title:'',
+  //   difficulty:'',
+  //   category:'',
+  //   link:'',
+  //   order: 0,
+  //   likes: 0,
+  //   dislikes: 0,
+  // });
 
-  const handleSubmit = async(e: React.ChangeEvent<HTMLFormElement>)=>{
-    e.preventDefault();
-    //convert input.order to integer
-    const newProblem = {
-      ...inputs,
-      order: Number(inputs.order),
-    }
-    await setDoc(doc(firestore, "problems", inputs.id), inputs);
-    alert("Saved to Firestore DB");
-  }
+  // const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>)=>{
+  //   setInputs({...inputs,[e.target.name] : e.target.value});
+  // }
+  // console.log(inputs);
+
+  // const handleSubmit = async(e: React.ChangeEvent<HTMLFormElement>)=>{
+  //   e.preventDefault();
+  //   //convert input.order to integer
+  //   const newProblem = {
+  //     ...inputs,
+  //     order: Number(inputs.order),
+  //   }
+  //   await setDoc(doc(firestore, "problems", inputs.id), inputs);
+  //   alert("Saved to Firestore DB");
+  // }
 
   return (
     <>
@@ -48,6 +50,13 @@ export default function ProblemsPage({}: Props) {
       </h1>
 
       <div className="relative overflow-x-auto mx-auto px-4 sm:px-6 pb-10">
+        {loadingProblems && (
+						<div className='max-w-[1200px] mx-auto sm:w-7/12 w-full animate-pulse'>
+							{[...Array(10)].map((_, idx) => (
+								<LoadingSkeleton key={idx} />
+							))}
+						</div>
+				)}
         <table className="w-full text-sm text-left text-gray-800 sm:w-10/12 max-w-[1200px] mx-auto bg-white shadow-lg rounded-xl">
           <thead className="text-[16px] text-black-900 uppercase border-b bg-gray-400">
             <tr>
@@ -58,11 +67,11 @@ export default function ProblemsPage({}: Props) {
               <th scope="col" className="px-6 py-3 font-semibold text-left">Companies</th>
             </tr>
           </thead>
-          <ProblemsTable />
+          <ProblemsTable setLoadingProblems={setLoadingProblems} />
         </table>
       </div>
       
-      {/* Temporary form to add problems to db */}
+      {/* Temporary form to add problems to db
       <form onSubmit={handleSubmit} className='p-6 flex flex-col max-w-sm gap-3'>
         <input onChange={handleInputChange} className='bg-black text-white' type="text" placeholder='problem id' name='id' />
         <input onChange={handleInputChange} className='bg-black text-white' type="text" placeholder='title' name='title' />
@@ -71,9 +80,21 @@ export default function ProblemsPage({}: Props) {
         <input onChange={handleInputChange}className='bg-black text-white' type="text" placeholder='order' name='order' />
         <input onChange={handleInputChange}className='bg-black text-white' type="text" placeholder='link?' name='link' />
         <button className='bg-black text-white'>Save to db</button>
-      </form>
+      </form> */}
 
       {authModal.isOpen && <AuthModal />}
     </>
   );
 }
+
+const LoadingSkeleton = () => {
+	return (
+		<div className='flex items-center space-x-12 mt-4 px-6'>
+			<div className='w-6 h-6 shrink-0 rounded-full bg-dark-layer-1'></div>
+			<div className='h-4 sm:w-52  w-32  rounded-full bg-dark-layer-1'></div>
+			<div className='h-4 sm:w-52  w-32 rounded-full bg-dark-layer-1'></div>
+			<div className='h-4 sm:w-52 w-32 rounded-full bg-dark-layer-1'></div>
+			<span className='sr-only'>Loading...</span>
+		</div>
+	);
+};
