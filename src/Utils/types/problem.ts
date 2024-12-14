@@ -29,4 +29,5 @@ export type DBProblem = {
 	order: number;
 	videoId?: string;
 	link?: string;
+	companies: Array<string>;
 };

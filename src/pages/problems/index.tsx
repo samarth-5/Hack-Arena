@@ -38,7 +38,7 @@ export default function ProblemsPage({}: Props) {
   //     ...inputs,
   //     order: Number(inputs.order),
   //   }
-  //   await setDoc(doc(firestore, "problems", inputs.id), inputs);
+  //   await setDoc(doc(firestore, "problems", inputs.id), newProblem);
   //   alert("Saved to Firestore DB");
   // }
 
@@ -80,7 +80,7 @@ export default function ProblemsPage({}: Props) {
         <input onChange={handleInputChange}className='bg-black text-white' type="text" placeholder='order' name='order' />
         <input onChange={handleInputChange}className='bg-black text-white' type="text" placeholder='link?' name='link' />
         <button className='bg-black text-white'>Save to db</button>
-      </form> */}
+      </form>  */}
 
       {authModal.isOpen && <AuthModal />}
     </>

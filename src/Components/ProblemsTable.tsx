@@ -6,7 +6,8 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { BsCheckCircle } from 'react-icons/bs';
 import { FaGoogle, FaFacebook, FaAmazon, FaApple, FaMicrosoft, FaLinkedin, FaSnapchat } from 'react-icons/fa';
-import { SiAdobe, SiUber } from "react-icons/si";
+import { FaMeta } from "react-icons/fa6";
+import { SiAdobe, SiUber, SiNetflix } from "react-icons/si";
 
 type Props = {
   setLoadingProblems: React.Dispatch<React.SetStateAction<boolean>>;
@@ -26,6 +27,8 @@ export default function ProblemsTable({ setLoadingProblems }: Props) {
         FaUber: <SiUber size={20} />,
         FaSnapchat: <FaSnapchat size={20} />,
         FaAdb: <SiAdobe size={20} />,
+        FaMeta: <FaMeta size={20} />,
+        FaNetflix: <SiNetflix size={20} />,
       };
 
       const renderCompanies = (companies: string[]) => {
@@ -81,7 +84,7 @@ export default function ProblemsTable({ setLoadingProblems }: Props) {
             <td className="px-6 py-3 font-medium text-[13px] text-black">{problem.category}</td>
             <td className="px-6 py-3 text-gray-700">
               <div className='flex gap-3'>
-                {/* {renderCompanies(problem.companies)} */}
+                {renderCompanies(problem.companies)}
               </div>
             </td>
           </tr>
