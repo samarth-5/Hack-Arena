@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { AiOutlineFullscreen, AiOutlineFullscreenExit, AiOutlineSetting } from 'react-icons/ai'
 
 type Props = {}
@@ -7,7 +7,31 @@ export default function PreferenceNav({}: Props) {
 
   const [isFullScreen, setIsFullScreen] = useState(false);
 
-  const handleFullScreen=()=>{}
+  const handleFullScreen = () => {
+	if (isFullScreen) {
+		document.exitFullscreen();
+	} else {
+		document.documentElement.requestFullscreen();
+	}
+	setIsFullScreen(!isFullScreen);
+  };
+
+  useEffect(() => {
+	function exitHandler(e: any) {
+		if (!document.fullscreenElement) {
+			setIsFullScreen(false);
+			return;
+		}
+		setIsFullScreen(true);
+	}
+
+	if (document.addEventListener) {
+		document.addEventListener("fullscreenchange", exitHandler);
+		document.addEventListener("webkitfullscreenchange", exitHandler);
+		document.addEventListener("mozfullscreenchange", exitHandler);
+		document.addEventListener("MSFullscreenChange", exitHandler);
+	}
+}, [isFullScreen]);
 
   return (
     <div className='flex items-center justify-between bg-dark-layer-2 h-11 w-full'>
