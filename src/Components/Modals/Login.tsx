@@ -33,7 +33,7 @@ export default function Login({}: Props) {
 			const newUser = await signInWithEmailAndPassword(inputs.email, inputs.password);
 			if (!newUser) 
       return;
-      toast.success("User logged in successfully!", { position: "top-center", autoClose: 3000, theme: "dark" });
+      toast.success("User Logged in successfully!", { position: "top-center", autoClose: 3000, theme: "dark" });
       setAuthModalState((prev) => ({ ...prev, isOpen: false }));
 			router.push("/");
 		} catch (error: any) {

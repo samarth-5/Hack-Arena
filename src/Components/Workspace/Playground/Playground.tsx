@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PreferenceNav from './PreferenceNav'
 import Split from 'react-split'
 import CodeMirror from "@uiw/react-codemirror";
@@ -86,10 +86,19 @@ export default function Playground({problem, setSuccess, setSolved}: Props) {
   const {query: { pid }} = useRouter();
 
   const handleChange = (value: string) => {
-    console.log(value);
+    //console.log(value);
 		setUserCode(value);
 		localStorage.setItem(`code-${pid}`, JSON.stringify(value));
 	};
+
+  useEffect(() => {
+		const code = localStorage.getItem(`code-${pid}`);
+		if (user) {
+			setUserCode(code ? JSON.parse(code) : problem.starterCode);
+		} else {
+			setUserCode(problem.starterCode);
+		}
+	}, [pid, user, problem.starterCode]);
 
 
   return (
@@ -98,7 +107,7 @@ export default function Playground({problem, setSuccess, setSolved}: Props) {
         <Split className='h-full' direction='vertical' sizes={[50, 50]} minSize={60}>
 				  <div className='w-full overflow-auto'>
 					  <CodeMirror
-						  value={problem.starterCode}
+						  value={userCode}
 				  		theme={noctisLilac}
 					  	extensions={[javascript()]}
 						  style={{ fontSize: 16 }}

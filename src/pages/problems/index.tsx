@@ -6,7 +6,6 @@ import ProblemsTable from '@/Components/ProblemsTable';
 // import { doc, setDoc } from 'firebase/firestore';
 import React, { useState } from 'react';
 import { useRecoilValue } from 'recoil';
-import { problems } from './problems';
 
 type Props = {};
 

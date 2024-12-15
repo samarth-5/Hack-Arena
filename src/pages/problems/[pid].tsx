@@ -2,6 +2,7 @@ import { authModalState } from '@/Atoms/authModalAtom';
 import AuthModal from '@/Components/Modals/AuthModal';
 import Topbar from '@/Components/Topbar';
 import Workspace from '@/Components/Workspace/Workspace';
+import useHasMounted from '@/hooks/useHasMounted';
 import { problems } from '@/Utils/problems';
 import { Problem } from '@/Utils/types/problem';
 import React from 'react'
@@ -16,6 +17,11 @@ export default function QuestionPage({problem}: Props) {
   //console.log(problem);
 
   const authModal = useRecoilValue(authModalState);
+
+  const hasMounted = useHasMounted();
+
+  if(!hasMounted)
+  return null;
     
   return (
     <>
