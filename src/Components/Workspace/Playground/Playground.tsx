@@ -12,11 +12,18 @@ import { auth, firestore } from '@/firebase/firebase';
 import { toast } from 'react-toastify';
 import { problems } from "@/Utils/problems";
 import { arrayUnion, doc, updateDoc } from 'firebase/firestore';
+import useLocalStorage from '@/hooks/useLocalStorage';
 
 type Props = {
   problem: Problem
   setSuccess: React.Dispatch<React.SetStateAction<boolean>>;
   setSolved: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface ISettings {
+  fontSize: string;
+  settingsModalIsOpen: boolean;
+  dropdownIsOpen: boolean;
 }
 
 export default function Playground({problem, setSuccess, setSolved}: Props) {
@@ -25,6 +32,14 @@ export default function Playground({problem, setSuccess, setSolved}: Props) {
   let [userCode, setUserCode] = useState<string>(problem.starterCode);
 
   const [user] = useAuthState(auth);
+
+  const [fontSize, setFontSize] = useLocalStorage("lcc-fontSize", "16px");
+
+  const [settings, setSettings] = useState<ISettings>({
+	fontSize: fontSize,
+	settingsModalIsOpen: false,
+	dropdownIsOpen: false,
+  });
 
   const handleSubmit = async()=>{
     if (!user) {
@@ -103,14 +118,14 @@ export default function Playground({problem, setSuccess, setSolved}: Props) {
 
   return (
     <div className='flex flex-col bg-white relative overflow-x-hidden'>
-        <PreferenceNav />
+        <PreferenceNav settings={settings} setSettings={setSettings} />
         <Split className='h-full' direction='vertical' sizes={[50, 50]} minSize={60}>
 				  <div className='w-full overflow-auto'>
 					  <CodeMirror
 						  value={userCode}
 				  		theme={noctisLilac}
 					  	extensions={[javascript()]}
-						  style={{ fontSize: 16 }}
+						  style={{ fontSize: settings.fontSize }}
               onChange={handleChange}
 				  	/>
 		  		</div>
