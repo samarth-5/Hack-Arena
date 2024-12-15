@@ -10,6 +10,9 @@ import { BsList } from 'react-icons/bs';
 import Timer from './Timer';
 import { toast } from 'react-toastify';
 import { FiLogOut } from 'react-icons/fi';
+import { useRouter } from 'next/router';
+import { problems } from "@/Utils/problems";
+import { Problem } from '@/Utils/types/problem';
 
 type Props = {
     problemPage?: boolean;
@@ -25,7 +28,29 @@ export default function Topbar({problemPage}: Props) {
 		  setAuthModalState((prev)=>({...prev,isOpen:true}));
 	  }
 
-    const handleProblemChange=(isForward: boolean)=>{}
+    const router= useRouter();
+    const handleProblemChange = (isForward: boolean) => {
+      //console.log(problems[router.query.pid as string]);
+      const { order } = problems[router.query.pid as string] as Problem;
+      //console.log(order);
+      const direction = isForward ? 1 : -1;
+      const nextProblemOrder = order + direction;
+      const nextProblemKey = Object.keys(problems).find((key) => problems[key].order === nextProblemOrder);
+  
+      if (isForward && !nextProblemKey) {
+        const firstProblemKey = Object.keys(problems).find((key) => problems[key].order === 1);
+        router.push(`/problems/${firstProblemKey}`);
+      } 
+      else if (!isForward && !nextProblemKey) {
+        const lastProblemKey = Object.keys(problems).find(
+          (key) => problems[key].order === Object.keys(problems).length
+        );
+        router.push(`/problems/${lastProblemKey}`);
+      } 
+      else {
+        router.push(`/problems/${nextProblemKey}`);
+      }
+    };
 
     const [signOut, loading, error] = useSignOut(auth);
 
