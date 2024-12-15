@@ -6,15 +6,91 @@ import { noctisLilac } from '@uiw/codemirror-theme-noctis-lilac';
 import { javascript } from '@codemirror/lang-javascript';
 import EditorFooter from './EditorFooter';
 import { Problem } from '@/Utils/types/problem';
+import { useRouter } from 'next/router';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth, firestore } from '@/firebase/firebase';
+import { toast } from 'react-toastify';
+import { problems } from "@/Utils/problems";
+import { arrayUnion, doc, updateDoc } from 'firebase/firestore';
 
 type Props = {
   problem: Problem
   setSuccess: React.Dispatch<React.SetStateAction<boolean>>;
+  setSolved: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function Playground({problem, setSuccess}: Props) {
+export default function Playground({problem, setSuccess, setSolved}: Props) {
   
   const [activeTestCaseId, setActiveTestCaseId] = useState<number>(0);
+  let [userCode, setUserCode] = useState<string>(problem.starterCode);
+
+  const [user] = useAuthState(auth);
+
+  const handleSubmit = async()=>{
+    if (!user) {
+			toast.error("Please Login to submit your code!", {
+				position: "top-center",
+				autoClose: 3000,
+				theme: "dark",
+			});
+			return;
+		}
+    try {
+			userCode = userCode.slice(userCode.indexOf(problem.starterFunctionName));
+			const cb = new Function(`return ${userCode}`)();
+			const handler = problems[pid as string].handlerFunction;
+
+			if (typeof handler === "function") {
+				const success = handler(cb);
+				if (success) {
+					toast.success("Congrats! All tests passed!", {
+						position: "top-center",
+						autoClose: 3000,
+						theme: "dark",
+					});
+					setSuccess(true);
+					setTimeout(() => {
+						setSuccess(false);
+					}, 4000);
+
+					const userRef = doc(firestore, "users", user.uid);
+					await updateDoc(userRef, {
+						solvedProblems: arrayUnion(pid),
+					});
+          setSolved(true);
+				}
+			}
+		} 
+    catch (error: any) {
+			console.log(error.message);
+			if (
+				error.message.startsWith("AssertionError [ERR_ASSERTION]: Expected values")
+			) {
+				toast.error("Oops! One or more test cases failed !", {
+					position: "top-center",
+					autoClose: 3000,
+					theme: "dark",
+				});
+			} 
+      else {
+				toast.error(error.message, {
+					position: "top-center",
+					autoClose: 3000,
+					theme: "dark",
+				});
+			}
+		}
+    //alert("Submit");
+  }
+
+  const {query: { pid }} = useRouter();
+
+  const handleChange = (value: string) => {
+    console.log(value);
+		setUserCode(value);
+		localStorage.setItem(`code-${pid}`, JSON.stringify(value));
+	};
+
 
   return (
     <div className='flex flex-col bg-white relative overflow-x-hidden'>
@@ -26,6 +102,7 @@ export default function Playground({problem, setSuccess}: Props) {
 				  		theme={noctisLilac}
 					  	extensions={[javascript()]}
 						  style={{ fontSize: 16 }}
+              onChange={handleChange}
 				  	/>
 		  		</div>
 			  	<div className='w-full px-5 overflow-auto'>
@@ -67,7 +144,7 @@ export default function Playground({problem, setSuccess}: Props) {
           </div>
         </Split>
 
-        <EditorFooter />
+        <EditorFooter handleSubmit={handleSubmit} />
     </div>
   )
 }

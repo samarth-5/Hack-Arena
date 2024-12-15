@@ -13,67 +13,67 @@ import { toast } from 'react-toastify';
 
 type Props = {
   problem: Problem
+  _solved: boolean
 }
 
-export default function ProblemDesc({problem}: Props) {
+export default function ProblemDesc({problem, _solved}: Props) {
   const [user] = useAuthState(auth);
   const { currentProblem, loading, problemDifficultyClass, setCurrentProblem } = useGetCurrentProblem(problem.id);
   const { liked, disliked, solved, setData, starred } = useGetUsersDataOnProblem(problem.id);
   const [updating, setUpdating] = useState(false);
 
-  const handleLike = async () => {
-		if (!user) {
-			toast.error("You must be Logged in to like a problem !", { position: "top-center", theme: "dark" });
-			return;
-		}
+    const handleLike = async () => {
+	if (!user) {
+		toast.error("You must be Logged in to like a problem !", { position: "top-center", theme: "dark" });
+		return;
+	}
 
     if (updating) return;
 		setUpdating(true);
 
     await runTransaction(firestore, async (transaction) => {
-			const userRef = doc(firestore, "users", user!.uid);
-		  const problemRef = doc(firestore, "problems", problem.id);
-		  const userDoc = await transaction.get(userRef);
-		  const problemDoc = await transaction.get(problemRef);
+		const userRef = doc(firestore, "users", user!.uid);
+	    const problemRef = doc(firestore, "problems", problem.id);
+	  	const userDoc = await transaction.get(userRef);
+		const problemDoc = await transaction.get(problemRef);
 
-			if (userDoc.exists() && problemDoc.exists()) {
-				if (liked) {
-					// remove problem id from likedProblems on user document, decrement likes on problem document
-					transaction.update(userRef, {
-						likedProblems: userDoc.data().likedProblems.filter((id: string) => id !== problem.id),
-					});
-					transaction.update(problemRef, {
-						likes: problemDoc.data().likes - 1,
-					});
+		if (userDoc.exists() && problemDoc.exists()) {
+			if (liked) {
+			// remove problem id from likedProblems on user document, decrement likes on problem document
+				transaction.update(userRef, {
+				likedProblems: userDoc.data().likedProblems.filter((id: string) => id !== problem.id),
+			});
+			transaction.update(problemRef, {
+				likes: problemDoc.data().likes - 1,
+			});
 
-					setCurrentProblem((prev) => (prev ? { ...prev, likes: prev.likes - 1 } : null));
-					setData((prev) => ({ ...prev, liked: false }));
-				} 
+			setCurrentProblem((prev) => (prev ? { ...prev, likes: prev.likes - 1 } : null));
+			setData((prev) => ({ ...prev, liked: false }));
+		} 
         else if (disliked) {
-					  transaction.update(userRef, {
-						likedProblems: [...userDoc.data().likedProblems, problem.id],
-						dislikedProblems: userDoc.data().dislikedProblems.filter((id: string) => id !== problem.id),
-					});
-					transaction.update(problemRef, {
-						likes: problemDoc.data().likes + 1,
-						dislikes: problemDoc.data().dislikes - 1,
-					});
-
-					setCurrentProblem((prev) =>
-						prev ? { ...prev, likes: prev.likes + 1, dislikes: prev.dislikes - 1 } : null
-					);
-					setData((prev) => ({ ...prev, liked: true, disliked: false }));
-				} 
+			transaction.update(userRef, {
+			likedProblems: [...userDoc.data().likedProblems, problem.id],
+			dislikedProblems: userDoc.data().dislikedProblems.filter((id: string) => id !== problem.id),
+		});
+		transaction.update(problemRef, {
+			likes: problemDoc.data().likes + 1,
+			dislikes: problemDoc.data().dislikes - 1,
+		});
+        setCurrentProblem((prev) =>
+			prev ? { ...prev, likes: prev.likes + 1, dislikes: prev.dislikes - 1 } : null
+		);
+			setData((prev) => ({ ...prev, liked: true, disliked: false }));
+		} 
         else {
-					transaction.update(userRef, {
-						likedProblems: [...userDoc.data().likedProblems, problem.id],
-					});
-					transaction.update(problemRef, {
-						likes: problemDoc.data().likes + 1,
-					});
-					setCurrentProblem((prev) => (prev ? { ...prev, likes: prev.likes + 1 } : null));
-					setData((prev) => ({ ...prev, liked: true }));
-				}
+			transaction.update(userRef, {
+			likedProblems: [...userDoc.data().likedProblems, problem.id],
+		});
+		transaction.update(problemRef, {
+		likes: problemDoc.data().likes + 1,
+      });
+	    setCurrentProblem((prev) => (prev ? { ...prev, likes: prev.likes + 1 } : null));
+	    setData((prev) => ({ ...prev, liked: true }));
+	    }
       }
     });
     setUpdating(false); 
@@ -188,7 +188,7 @@ export default function ProblemDesc({problem}: Props) {
                 {currentProblem.difficulty}
               </div>
 
-              {solved && (
+              {(solved || _solved) && (
 									<div className='rounded p-[3px] ml-4 text-lg transition-colors duration-200 text-green-s text-dark-green-s'>
 										<BsCheck2Circle />
 									</div>

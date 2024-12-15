@@ -15,6 +15,7 @@ export default function Workspace({ problem }: Props) {
   const { width, height } = useWindowSize();
   const [isClient, setIsClient] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [solved,setSolved] = useState(false);
 
   useEffect(() => {
     setIsClient(true); // Ensures the component knows it's running on the client side
@@ -23,8 +24,8 @@ export default function Workspace({ problem }: Props) {
   return (
     <>
       <Split className="split" minSize={0}>
-        <ProblemDesc problem={problem} />
-        <Playground problem={problem} setSuccess={setSuccess} />
+        <ProblemDesc problem={problem} _solved={solved} />
+        <Playground problem={problem} setSuccess={setSuccess} setSolved={setSolved} />
       </Split>
       {success && isClient &&
         createPortal(
