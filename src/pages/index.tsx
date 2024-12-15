@@ -5,6 +5,7 @@ import { authModalState } from "@/Atoms/authModalAtom";
 import AuthModal from "@/Components/Modals/AuthModal";
 import Image from "next/image";
 import Link from "next/link";
+import useHasMounted from "@/hooks/useHasMounted";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -14,6 +15,11 @@ const geistSans = localFont({
 
 export default function Home() {
   const authModal = useRecoilValue(authModalState);
+
+  const hasMounted = useHasMounted();
+
+  if(!hasMounted)
+  return null;
 
   return (
     <main className="min-h-screen bg-gray-50 text-black">

@@ -9,9 +9,10 @@ import { Problem } from '@/Utils/types/problem';
 
 type Props = {
   problem: Problem
+  setSuccess: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function Playground({problem}: Props) {
+export default function Playground({problem, setSuccess}: Props) {
   
   const [activeTestCaseId, setActiveTestCaseId] = useState<number>(0);
 
