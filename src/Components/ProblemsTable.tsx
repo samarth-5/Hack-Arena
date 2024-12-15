@@ -1,9 +1,9 @@
-import { firestore } from '@/firebase/firebase';
-import { problems } from '@/pages/problems/problems';
+import { auth, firestore } from '@/firebase/firebase';
 import { DBProblem } from '@/Utils/types/problem';
-import { collection, getDocs, orderBy, query } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs, orderBy, query } from 'firebase/firestore';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import { useAuthState } from 'react-firebase-hooks/auth';
 import { BsCheckCircle } from 'react-icons/bs';
 import { FaGoogle, FaFacebook, FaAmazon, FaApple, FaMicrosoft, FaLinkedin, FaSnapchat } from 'react-icons/fa';
 import { FaMeta } from "react-icons/fa6";
@@ -16,6 +16,8 @@ type Props = {
 export default function ProblemsTable({ setLoadingProblems }: Props) {
 
     const problems = useGetProblems(setLoadingProblems);
+    const solvedProblems = useGetSolvedProblems();
+    console.log(solvedProblems);
 
     const iconMap: Record<string, JSX.Element> = {
         FaGoogle: <FaGoogle size={20} />,
@@ -57,7 +59,7 @@ export default function ProblemsTable({ setLoadingProblems }: Props) {
             key={problem.id}
           >
             <th className="px-6 py-3 font-medium">
-              <BsCheckCircle className='text-green-500' fontSize={"18"} width='18' />
+              {solvedProblems.includes(problem.id) && <BsCheckCircle className='text-green-500' fontSize={"18"} width='18' />}
             </th>
             <td className="px-6 py-3">
                   {problem.link ? (
@@ -115,4 +117,25 @@ function useGetProblems(setLoadingProblems: React.Dispatch<React.SetStateAction<
 		getProblems();
 	}, [setLoadingProblems]);
 	return problems;
+}
+
+function useGetSolvedProblems() {
+	const [solvedProblems, setSolvedProblems] = useState<string[]>([]);
+	const [user] = useAuthState(auth);
+
+	useEffect(() => {
+		const getSolvedProblems = async () => {
+			const userRef = doc(firestore, "users", user!.uid);
+			const userDoc = await getDoc(userRef);
+
+			if (userDoc.exists()) {
+				setSolvedProblems(userDoc.data().solvedProblems);
+			}
+		};
+
+		if (user) getSolvedProblems();
+		if (!user) setSolvedProblems([]);
+	}, [user]);
+
+	return solvedProblems;
 }
