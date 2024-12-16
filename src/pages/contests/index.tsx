@@ -12,6 +12,19 @@ export default function ContestsPage({}: Props) {
 
   const upcomingContests = [
     {
+      title: "Contest Round 4",
+      endDate: new Date("2024-12-31T23:59:59"),
+      image: "/contest.jpeg",
+    },
+    {
+      title: "Contest Round 5",
+      endDate: new Date("2025-01-15T23:59:59"),
+      image: "/contest.jpeg",
+    },
+  ];
+
+  const ongoingContests = [
+    {
       title: "Contest Round 1",
       endDate: new Date("2024-12-31T23:59:59"),
       image: "/contest.jpeg",
@@ -21,9 +34,6 @@ export default function ContestsPage({}: Props) {
       endDate: new Date("2025-01-15T23:59:59"),
       image: "/contest.jpeg",
     },
-  ];
-
-  const ongoingContests = [
     {
       title: "Contest Round 3",
       endDate: new Date("2024-12-20T23:59:59"),
@@ -35,68 +45,46 @@ export default function ContestsPage({}: Props) {
     <main className="bg-white text-black min-h-screen">
       <Navbar />
 
-      <div className="contests px-16 py-8">
-        <h1 className="text-4xl font-bold text-center mb-8 uppercase tracking-widest">
-          Contests Page
+      <div className="contests px-20 py-8">
+        <h1 className="text-4xl font-bold text-center mb-8 uppercase tracking-widest text-gray-800">
+          Contests
         </h1>
-
-        {authModal.isOpen && <AuthModal />}
         
-        {/* Ongoing Contests Section */}
-        <section>
-          <h2 className="text-2xl font-semibold mb-6 border-b border-gray-300 pb-2">
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold mb-6 border-b border-gray-300 pb-2 text-gray-700">
             Ongoing Contests
           </h2>
-          <div className="flex flex-wrap gap-6 justify-center">
+          <div className="flex flex-wrap gap-6">
             {ongoingContests.map((contest, index) => (
-              <div
+              <ContestCard
                 key={index}
-                className="bg-white border border-gray-300 rounded-lg shadow-md p-4 w-[300px] transition-transform hover:scale-105">
-                <img
-                  src={contest.image}
-                  alt={contest.title}
-                  className="rounded-t-lg h-40 w-full object-cover mb-4"
-                />
-                <h3 className="text-lg font-bold mb-2">{contest.title}</h3>
-                <p className="text-sm mb-4 text-gray-600">
-                  Ends on: {contest.endDate.toDateString()}
-                </p>
-                <button className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition">
-                  Participate
-                </button>
-              </div>
+                title={contest.title}
+                endDate={contest.endDate}
+                image={contest.image}
+                actionLabel="Participate"
+              />
             ))}
           </div>
         </section>
 
         <section className="mb-12">
-          <h2 className="text-2xl font-semibold mb-6 border-b border-gray-300 pb-2">
+          <h2 className="text-2xl font-semibold mb-6 border-b border-gray-300 pb-2 text-gray-700">
             Upcoming Contests
           </h2>
-          <div className="flex flex-wrap gap-6 justify-center">
+          <div className="flex flex-wrap gap-6">
             {upcomingContests.map((contest, index) => (
-              <div
+              <ContestCard
                 key={index}
-                className="bg-white border border-gray-300 rounded-lg shadow-md p-4 w-[300px] transition-transform hover:scale-105"
-              >
-                <img
-                  src={contest.image}
-                  alt={contest.title}
-                  className="rounded-t-lg h-40 w-full object-cover mb-4"
-                />
-                <h3 className="text-lg font-bold mb-2">{contest.title}</h3>
-                <p className="text-sm mb-4 text-gray-600">
-                  Ends on: {contest.endDate.toDateString()}
-                </p>
-                <button className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition">
-                  Register
-                </button>
-              </div>
+                title={contest.title}
+                endDate={contest.endDate}
+                image={contest.image}
+                actionLabel="Register"
+              />
             ))}
           </div>
         </section>
-
       </div>
+      {authModal.isOpen && <AuthModal />}
     </main>
   );
 }
