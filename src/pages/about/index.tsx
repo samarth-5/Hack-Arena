@@ -6,12 +6,17 @@ import { SiLeetcode } from 'react-icons/si';
 import { useRecoilValue } from 'recoil';
 import { authModalState } from '@/Atoms/authModalAtom';
 import AuthModal from '@/Components/Modals/AuthModal';
+import useHasMounted from '@/hooks/useHasMounted';
 
 type Props = {}
 
 export default function AboutPage({}: Props) {
 
   const authModal = useRecoilValue(authModalState);
+  const hasMounted = useHasMounted();
+
+  if(!hasMounted)
+  return null;
 
   return (
     <>
@@ -40,6 +45,9 @@ export default function AboutPage({}: Props) {
           <Link target='_blank' href='https://www.instagram.com/samarth123_/' className='hover:scale-150 duration-500'><FaInstagram size={25} className='hover:text-black' /></Link>
         </div>
       </section>
+      <footer className="mt-20 py-10 bg-black text-gray-200 text-center">
+        <p className="text-sm">© 2025 Developed by @<Link href='/about' className="font-semibold hover:underline">Samarth</Link>. All rights reserved.</p>
+      </footer>
       {authModal.isOpen && <AuthModal />}
     </>
   )

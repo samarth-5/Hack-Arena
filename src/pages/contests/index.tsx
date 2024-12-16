@@ -4,11 +4,17 @@ import AuthModal from "@/Components/Modals/AuthModal";
 import Navbar from "@/Components/Navbar";
 import ContestCard from "@/Components/ContestCard";
 import { useRecoilValue } from "recoil";
+import Link from "next/link";
+import useHasMounted from "@/hooks/useHasMounted";
 
 type Props = {};
 
 export default function ContestsPage({}: Props) {
   const authModal = useRecoilValue(authModalState);
+  const hasMounted = useHasMounted();
+
+  if(!hasMounted)
+  return null;
 
   const upcomingContests = [
     {
@@ -45,7 +51,7 @@ export default function ContestsPage({}: Props) {
     <main className="bg-white text-black min-h-screen">
       <Navbar />
 
-      <div className="contests px-20 py-8">
+      <div className="contests px-24 py-8">
         <h1 className="text-4xl font-bold text-center mb-8 uppercase tracking-widest text-gray-800">
           Contests
         </h1>
@@ -71,7 +77,7 @@ export default function ContestsPage({}: Props) {
           <h2 className="text-2xl font-semibold mb-6 border-b border-gray-300 pb-2 text-gray-700">
             Upcoming Contests
           </h2>
-          <div className="flex flex-wrap gap-6">
+          <div className="flex flex-wrap gap-8">
             {upcomingContests.map((contest, index) => (
               <ContestCard
                 key={index}
@@ -84,6 +90,9 @@ export default function ContestsPage({}: Props) {
           </div>
         </section>
       </div>
+      <footer className="mt-20 py-10 bg-black text-gray-200 text-center">
+        <p className="text-sm">© 2025 Developed by @<Link href='/about' className="font-semibold hover:underline">Samarth</Link>. All rights reserved.</p>
+      </footer>
       {authModal.isOpen && <AuthModal />}
     </main>
   );

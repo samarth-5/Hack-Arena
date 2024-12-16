@@ -2,6 +2,8 @@ import { authModalState } from '@/Atoms/authModalAtom';
 import AuthModal from '@/Components/Modals/AuthModal';
 import Navbar from '@/Components/Navbar';
 import ProblemsTable from '@/Components/ProblemsTable';
+import useHasMounted from '@/hooks/useHasMounted';
+import Link from 'next/link';
 // import { firestore } from '@/firebase/firebase';
 // import { doc, setDoc } from 'firebase/firestore';
 import React, { useState } from 'react';
@@ -13,7 +15,10 @@ export default function ProblemsPage({}: Props) {
   const authModal = useRecoilValue(authModalState);
 
   const [loadingProblems, setLoadingProblems] = useState(true);
+  const hasMounted = useHasMounted();
 
+  if(!hasMounted)
+  return null;
   // const [inputs,setInputs]=useState({
   //   id:'',
   //   title:'',
@@ -69,6 +74,9 @@ export default function ProblemsPage({}: Props) {
           <ProblemsTable setLoadingProblems={setLoadingProblems} />
         </table>
       </div>
+      <footer className="mt-20 py-10 bg-black text-gray-200 text-center">
+        <p className="text-sm">© 2025 Developed by @<Link href='/about' className="font-semibold hover:underline">Samarth</Link>. All rights reserved.</p>
+      </footer>
       
       {/* Temporary form to add problems to db
       <form onSubmit={handleSubmit} className='p-6 flex flex-col max-w-sm gap-3'>
