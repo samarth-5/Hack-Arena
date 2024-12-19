@@ -1,4 +1,6 @@
+import { contestDetailsModalState } from "@/Atoms/contestDetailsModal";
 import React, { useEffect, useState } from "react";
+import { useSetRecoilState } from "recoil";
 
 type CountdownTimerProps = {
   endDate: Date;
@@ -42,6 +44,13 @@ type ContestCardProps = {
 };  
 
 const ContestCard = ({ title, endDate, image, actionLabel }: ContestCardProps) => {
+
+  const setDetailsModalState=useSetRecoilState(contestDetailsModalState);
+
+  const handleClick=()=>{
+		setDetailsModalState((prev)=>({...prev,isOpen:true}));
+	}
+
   return (
     <div className="w-full max-w-xs border border-gray-300 rounded-2xl bg-white shadow-lg overflow-hidden transform transition-transform hover:scale-105 hover:shadow-xl">
       <div className="w-full h-56 p-2 bg-gray-200">
@@ -64,7 +73,7 @@ const ContestCard = ({ title, endDate, image, actionLabel }: ContestCardProps) =
           <button className="flex-1 bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-all">
             {actionLabel}
           </button>
-          <button className="flex-1 border border-black text-black px-4 py-2 rounded-md hover:bg-gray-100 transition-all">
+          <button onClick={handleClick} className="flex-1 border border-black text-black px-4 py-2 rounded-md hover:bg-gray-100 transition-all">
             View Details
           </button>
         </div>
