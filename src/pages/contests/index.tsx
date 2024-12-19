@@ -6,10 +6,14 @@ import ContestCard from "@/Components/ContestCard";
 import { useRecoilValue } from "recoil";
 import Link from "next/link";
 import useHasMounted from "@/hooks/useHasMounted";
+import { contestDetailsModalState } from "@/Atoms/contestDetailsModal";
+import Details from "@/Components/Modals/Details";
 
 type Props = {};
 
 export default function ContestsPage({}: Props) {
+  const contestDetailsModal = useRecoilValue(contestDetailsModalState);
+  console.log(contestDetailsModal);
   const authModal = useRecoilValue(authModalState);
   const hasMounted = useHasMounted();
 
@@ -93,6 +97,7 @@ export default function ContestsPage({}: Props) {
       <footer className="mt-20 py-10 bg-black text-gray-200 text-center">
         <p className="text-sm">© 2025 Developed by @<Link href='/about' className="font-semibold hover:underline">Samarth</Link>. All rights reserved.</p>
       </footer>
+      {contestDetailsModal.isOpen ? <Details /> : <></>} 
       {authModal.isOpen && <AuthModal />}
     </main>
   );

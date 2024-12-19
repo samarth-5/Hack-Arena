@@ -1,16 +1,15 @@
 import { IoClose } from "react-icons/io5";
-import Login from "./Login";
-import Signup from './Signup';
 import React, { useEffect } from "react";
-import ResetPassword from "./ResetPassword";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { authModalState } from "@/Atoms/authModalAtom";
+import Details from "./Details";
+import { contestDetailsModalState } from "@/Atoms/contestDetailsModal";
 
 type Props = {};
 
 export default function ContestDetails({}: Props) {
 
-  const authModal = useRecoilValue(authModalState);
+  //const contestDetailsModal = useRecoilValue(contestDetailsModalState);
+  //console.log(contestDetailsModal);
 	const closeModal = useCloseModal();
 
   return (
@@ -30,7 +29,7 @@ export default function ContestDetails({}: Props) {
               </button>
             </div>
 
-            {authModal.type === "login" ? <Login /> : authModal.type === "register" ? <Signup /> : <ResetPassword />}
+            
           </div>
         </div>
       </div>
@@ -38,20 +37,3 @@ export default function ContestDetails({}: Props) {
   );
 }
 
-function useCloseModal() {
-	const setAuthModal = useSetRecoilState(authModalState);
-
-	const closeModal = () => {
-		setAuthModal((prev) => ({ ...prev, isOpen: false, type: "login" }));
-	};
-
-	useEffect(() => {
-		const handleEsc = (e: KeyboardEvent) => {
-			if (e.key === "Escape") closeModal();
-		};
-		window.addEventListener("keydown", handleEsc);
-		return () => window.removeEventListener("keydown", handleEsc);
-	}, []);
-
-	return closeModal;
-}
