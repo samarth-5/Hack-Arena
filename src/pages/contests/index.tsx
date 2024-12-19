@@ -22,12 +22,12 @@ export default function ContestsPage({}: Props) {
 
   const upcomingContests = [
     {
-      title: "Contest Round 4",
+      title: "DSA Sprint 3.0",
       endDate: new Date("2024-12-31T23:59:59"),
       image: "/contest.jpeg",
     },
     {
-      title: "Contest Round 5",
+      title: "DSA Mastery 2.0",
       endDate: new Date("2025-01-15T23:59:59"),
       image: "/contest.jpeg",
     },
@@ -35,17 +35,17 @@ export default function ContestsPage({}: Props) {
 
   const ongoingContests = [
     {
-      title: "Contest Round 1",
+      title: "DSA Sprint 1.0",
       endDate: new Date("2024-12-31T23:59:59"),
       image: "/contest.jpeg",
     },
     {
-      title: "Contest Round 2",
+      title: "DSA Sprint 2.0",
       endDate: new Date("2025-01-15T23:59:59"),
       image: "/contest.jpeg",
     },
     {
-      title: "Contest Round 3",
+      title: "DSA Mastery 1.0",
       endDate: new Date("2024-12-20T23:59:59"),
       image: "/contest.jpeg",
     },
@@ -71,7 +71,7 @@ export default function ContestsPage({}: Props) {
                 title={contest.title}
                 endDate={contest.endDate}
                 image={contest.image}
-                actionLabel="Participate"
+                actionLabel="Start"
               />
             ))}
           </div>

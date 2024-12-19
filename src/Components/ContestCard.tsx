@@ -62,7 +62,7 @@ const ContestCard = ({ title, endDate, image, actionLabel }: ContestCardProps) =
         <p className="text-sm text-gray-600 mb-4">
           Test your problem-solving skills with DSA. Compete with others and solve challenging problems.
         </p>
-        {actionLabel !== "Participate" && (
+        {actionLabel !== "Start" && (
           <div className="flex items-center gap-2 mb-4">
             <span className="text-sm font-semibold">Starts in</span>
             <CountdownTimer endDate={endDate} />

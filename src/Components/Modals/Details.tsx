@@ -1,53 +1,87 @@
 import { contestDetailsModalState } from '@/Atoms/contestDetailsModal';
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { useSetRecoilState } from 'recoil';
 
-type Props = {}
+type Props = {};
 
 export default function Details({}: Props) {
-
   const closeModal = useCloseModal();
-  
+
   return (
     <div>
-      <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-black bg-opacity-75" onClick={closeModal}></div>
-      
-            <div className="w-full sm:w-[450px] absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] flex justify-center items-center">
-              <div className="relative w-full h-full mx-auto flex items-center justify-center">
-                <div className="bg-gradient-to-b from-gray-800 to-black rounded-xl shadow-lg border border-gray-700 relative w-full mx-6 p-6">
-                  
-                  <div className="flex justify-end">
-                    <button
-                      type="button"
-                      className="bg-transparent rounded-full text-gray-400 p-2 hover:bg-gray-700 hover:text-white"
-                      onClick={closeModal}>
-                      <IoClose className="h-6 w-6" />
-                    </button>
-                  </div>
-      
-                  
-                </div>
+      <div
+        className="fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-black bg-opacity-75"
+        onClick={closeModal}></div>
+
+      <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full sm:w-[550px]">
+        <div className="relative w-full h-full mx-auto flex items-center justify-center">
+          <div className="bg-gradient-to-b from-gray-800 to-black rounded-xl shadow-lg border border-gray-700 relative w-full mx-6 p-6 text-white">
+            <div className="flex justify-end">
+              <button
+                type="button"
+                className="bg-transparent rounded-full text-gray-400 p-2 hover:bg-gray-700 hover:text-white"
+                onClick={closeModal}>
+                <IoClose className="h-6 w-6" />
+              </button>
+            </div>
+
+            <div className="text-center">
+              <h1 className="text-2xl font-bold mb-4">Hacker's Arena</h1>
+              <h2 className="text-xl font-semibold mb-2">Welcome to the 429th Hacker's Arena Weekly Contest</h2>
+              <p className="text-gray-300 mb-4">
+                This Hacker's Arena contest is sponsored by Hacker's Arena.
+              </p>
+
+              <div className="bg-gray-700 p-4 rounded-md text-left">
+                <h3 className="text-lg font-semibold mb-2">⭐ Bonus Prizes ⭐</h3>
+                <ul className="list-disc list-inside space-y-2">
+                  <li>Contestants ranked 1st ~ 3rd will win a Hacker's Arena Backpack</li>
+                  <li>Contestants ranked 4th ~ 10th will win a Hacker's Arena Water Bottle</li>
+                  <li>Contestants ranked 11th ~ 16th will win a Hacker's Arena Big O Notebook</li>
+                </ul>
+                <p className="text-gray-400 mt-4 text-sm">
+                  Only Hacker's Arena accounts are eligible for the bonus rewards. After the ranking is finalized, a
+                  Hacker's Arena team member will reach out to you through email regarding the gift!
+                </p>
               </div>
             </div>
+
+            <div className="flex justify-center mt-6">
+              <button
+                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
+                onClick={() => alert('Contest Started!')}>
+                Participate
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  )
+  );
 }
 
 function useCloseModal() {
-	const setDetailsModalState=useSetRecoilState(contestDetailsModalState);
+  const setDetailsModalState = useSetRecoilState(contestDetailsModalState);
 
-	const closeModal = () => {
-		setDetailsModalState((prev) => ({ ...prev, isOpen: false }));
-	};
+  const closeModal = () => {
+    setDetailsModalState((prev) => ({ ...prev, isOpen: false }));
+    document.body.classList.remove('modal-open');
+  };
 
-	useEffect(() => {
-		const handleEsc = (e: KeyboardEvent) => {
-			if (e.key === "Escape") closeModal();
-		};
-		window.addEventListener("keydown", handleEsc);
-		return () => window.removeEventListener("keydown", handleEsc);
-	}, []);
+  useEffect(() => {
+    document.body.classList.add('modal-open');
 
-	return closeModal;
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeModal();
+    };
+    window.addEventListener('keydown', handleEsc);
+
+    return () => {
+      window.removeEventListener('keydown', handleEsc);
+      document.body.classList.remove('modal-open');
+    };
+  }, []);
+
+  return closeModal;
 }
