@@ -17,7 +17,8 @@ export default function ProblemsTable({ setLoadingProblems }: Props) {
 
     const problems = useGetProblems(setLoadingProblems);
     const solvedProblems = useGetSolvedProblems();
-    console.log(solvedProblems);
+    //console.log(solvedProblems);
+    const [user] = useAuthState(auth);
 
     const iconMap: Record<string, JSX.Element> = {
         FaGoogle: <FaGoogle size={20} />,
@@ -36,7 +37,7 @@ export default function ProblemsTable({ setLoadingProblems }: Props) {
       const renderCompanies = (companies: string[]) => {
         return companies.map((iconName, index) => (
           <div key={index}>
-            {iconMap[iconName]} {/* Render the icon corresponding to the iconName */}
+            {iconMap[iconName]}
           </div>
         ));
       };
@@ -72,9 +73,9 @@ export default function ProblemsTable({ setLoadingProblems }: Props) {
 									</Link>
 								) : (
 									<Link
-										className='hover:text-blue-600 cursor-pointer text-[15px] font-semibold'
-										href={`/problems/${problem.id}`}
-									>
+										className={`hover:text-blue-600 cursor-pointer text-[15px] font-semibold ${
+                !user ? "cursor-not-allowed" : ""}`}
+										href={`/problems/${problem.id}`}>
 										{problem.title}
 									</Link>
 								)}

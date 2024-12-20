@@ -6,20 +6,30 @@ import AuthModal from "@/Components/Modals/AuthModal";
 import Image from "next/image";
 import Link from "next/link";
 import useHasMounted from "@/hooks/useHasMounted";
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/firebase/firebase";
+import { toast } from "react-toastify";
 
 export default function Home() {
   const authModal = useRecoilValue(authModalState);
+  const [user] = useAuthState(auth);
 
   const hasMounted = useHasMounted();
 
   if(!hasMounted)
   return null;
+
+  const handleClick = () => {
+      if(!user)
+      {
+        toast.error("Sign in to start practicing !", {
+          position: "top-center",
+          autoClose: 3000,
+          theme: "dark",
+        });
+        return;
+      }
+    }
 
   return (
     <main className="min-h-screen bg-gray-50 text-black">
@@ -42,11 +52,20 @@ export default function Home() {
           Unlock your potential by solving problems that mirror real-world challenges at top companies like Meta, Amazon, Apple, Netflix, and Google. 
           Practice consistently, boost your confidence, and prepare to ace technical interviews.
         </p>
-        <Link href="/problems">
-          <button className="mt-6 px-8 py-3 bg-black text-white font-semibold rounded-lg shadow-md hover:bg-gray-800 transition">
-            Start Practicing Now
-          </button>
-        </Link>
+        {
+          user && 
+          (<Link href="/problems">
+            <button className="mt-6 px-8 py-3 bg-black text-white font-semibold rounded-lg shadow-md hover:bg-gray-800 transition">
+              Start Practicing Now
+            </button>
+          </Link>)
+        }
+        {
+          !user &&
+          (<button onClick={handleClick} className="cursor-not-allowed mt-6 px-8 py-3 bg-black text-white font-semibold rounded-lg shadow-md hover:bg-gray-800 transition">
+              Start Practicing Now
+            </button>)       
+        }
       </section>
 
       <section className="px-20 mx-20 mt-16">
