@@ -1,4 +1,5 @@
 import { contestDetailsModalState } from "@/Atoms/contestDetailsModal";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
 
@@ -70,10 +71,10 @@ const ContestCard = ({ title, endDate, image, actionLabel }: ContestCardProps) =
         )}
 
         <div className="mt-4 flex gap-4">
-          <button className="flex-1 bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 transition-all">
+          <Link href={{ pathname: "/contests/preview", query: { title } }}  className="flex-1 font-semibold w-full bg-black px-4 py-2 rounded-md hover:bg-gray-800 transition-all text-white text-center flex items-center justify-center">
             {actionLabel}
-          </button>
-          <button onClick={handleClick} className="flex-1 border border-black text-black px-4 py-2 rounded-md hover:bg-gray-100 transition-all">
+          </Link>
+          <button onClick={handleClick} className="flex-1 font-semibold border border-black text-black px-4 py-2 rounded-md hover:bg-gray-100 transition-all">
             View Details
           </button>
         </div>
