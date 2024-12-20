@@ -51,7 +51,7 @@ export default function ContestQuestions({ setLoadingProblems }: Props) {
             <td className={`px-6 py-3 ${difficultyColor} font-semibold`}>
               {problem.difficulty}
             </td>
-            <td className="px-6 py-3 font-semibold">
+            <td className="px-6 py-3 font-semibold pl-16">
               {points[idx]} 
             </td>
             <th className="px-6 py-3 font-medium">

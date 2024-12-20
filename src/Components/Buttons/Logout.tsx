@@ -11,7 +11,7 @@ export default function Logout({}: Props) {
 
 	const handleLogout = () => {
 		signOut();
-		toast.success("User Logged out successfully!", { position: "top-center", autoClose: 3000, theme: "dark" });
+		toast.success("User logged out successfully!", { position: "top-center", autoClose: 3000, theme: "dark" });
 	};
 	return (
 		<button className="bg-black text-white py-3 px-3 cursor-pointer rounded-full hover:bg-gray-800 transition-all duration-200"
