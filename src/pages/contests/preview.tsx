@@ -1,4 +1,4 @@
-import ContestQuestions from '@/Components/ContestQuestions';
+import ContestQuestions from '@/Components/ContestQuestions';  // Import the component
 import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
 import Image from "next/image";
@@ -11,15 +11,10 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/firebase/firebase';
 import Link from 'next/link';
 
-type Props = {};
+type Props = {}; // Empty props for now
 
 const CountdownTimer = ({ durationHours, stopTimerRef }: { durationHours: number; stopTimerRef: React.MutableRefObject<(() => void) | null>; }) => {
-  const [timeLeft, setTimeLeft] = useState({
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
-
+  const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -29,7 +24,6 @@ const CountdownTimer = ({ durationHours, stopTimerRef }: { durationHours: number
     const calculateTimeLeft = () => {
       const now = new Date().getTime();
       const distance = endDate.getTime() - now;
-
       return {
         hours: Math.max(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)), 0),
         minutes: Math.max(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)), 0),
@@ -38,10 +32,7 @@ const CountdownTimer = ({ durationHours, stopTimerRef }: { durationHours: number
     };
 
     setTimeLeft(calculateTimeLeft());
-
-    timerRef.current = setInterval(() => {
-      setTimeLeft(calculateTimeLeft());
-    }, 1000);
+    timerRef.current = setInterval(() => setTimeLeft(calculateTimeLeft()), 1000);
 
     stopTimerRef.current = () => {
       if (timerRef.current) {
@@ -62,30 +53,27 @@ const CountdownTimer = ({ durationHours, stopTimerRef }: { durationHours: number
   );
 };
 
-export default function preview({}: Props) {
+const Preview = ({}: Props) => {
   const router = useRouter();
   const { title } = router.query;
 
   const [user] = useAuthState(auth);
   const authModal = useRecoilValue(authModalState);
-  const [loadingProblems, setLoadingProblems] = useState(true);
+  const [loadingProblems, setLoadingProblems] = useState(true);  // State for loading problems
 
   const stopTimerRef = useRef<(() => void) | null>(null);
 
   const handleClick = () => {
-    if(!user)
-    {
-      toast.error("Sign in to participate in contest !", {
+    if (!user) {
+      toast.error("Sign in to participate in contest!", {
         position: "top-center",
         autoClose: 3000,
         theme: "dark",
       });
       return;
     }
-    if (stopTimerRef.current) {
-      stopTimerRef.current(); 
-    }
-    toast.success("You have successfully completed the contest !", {
+    if (stopTimerRef.current) stopTimerRef.current();
+    toast.success("You have successfully completed the contest!", {
       position: "top-center",
       autoClose: 3000,
       theme: "dark",
@@ -105,8 +93,7 @@ export default function preview({}: Props) {
 
         <div className="flex flex-col lg:flex-row mt-6">
           <div className="lg:w-3/4">
-            <table className={`w-full text-sm text-left text-gray-800 sm:w-10/12 max-w-[1200px] bg-white shadow-lg rounded-xl ${
-                !user ? "cursor-not-allowed" : ""}`}>
+            <table className={`w-full text-sm text-left text-gray-800 sm:w-10/12 max-w-[1200px] bg-white shadow-lg rounded-xl ${!user ? "cursor-not-allowed" : ""}`}>
               <thead className="text-[16px] text-black-900 uppercase border-b bg-gray-400">
                 <tr>
                   <th scope="col" className="px-6 py-3 font-semibold text-left">Question</th>
@@ -115,7 +102,7 @@ export default function preview({}: Props) {
                   <th scope="col" className="px-6 py-3 font-semibold text-left">Status</th>
                 </tr>
               </thead>
-              <ContestQuestions setLoadingProblems={setLoadingProblems} />
+              <ContestQuestions setLoadingProblems={setLoadingProblems} /> {/* Pass the setLoadingProblems function here */}
             </table>
 
             <button
@@ -181,4 +168,6 @@ export default function preview({}: Props) {
       {authModal.isOpen && <AuthModal />}
     </div>
   );
-}
+};
+
+export default Preview;

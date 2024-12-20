@@ -1,5 +1,4 @@
 import Navbar from "@/Components/Navbar";
-import localFont from "next/font/local";
 import { useRecoilValue } from "recoil";
 import { authModalState } from "@/Atoms/authModalAtom";
 import AuthModal from "@/Components/Modals/AuthModal";

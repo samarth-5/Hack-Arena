@@ -71,7 +71,7 @@ const ContestCard = ({ title, endDate, image, actionLabel }: ContestCardProps) =
         )}
 
         <div className="mt-4 flex gap-4">
-          <Link href={{ pathname: "/contests/preview", query: { title } }}  className="flex-1 font-semibold w-full bg-black px-4 py-2 rounded-md hover:bg-gray-800 transition-all text-white text-center flex items-center justify-center">
+          <Link href={{ pathname: "/contests/Preview", query: { title } }}  className="flex-1 font-semibold w-full bg-black px-4 py-2 rounded-md hover:bg-gray-800 transition-all text-white text-center flex items-center justify-center">
             {actionLabel}
           </Link>
           <button onClick={handleClick} className="flex-1 font-semibold border border-black text-black px-4 py-2 rounded-md hover:bg-gray-100 transition-all">
