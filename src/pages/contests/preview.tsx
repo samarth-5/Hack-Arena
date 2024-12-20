@@ -13,6 +13,7 @@ import Link from 'next/link';
 
 type Props = {}; // Empty props for now
 
+// CountdownTimer component for displaying the countdown
 const CountdownTimer = ({ durationHours, stopTimerRef }: { durationHours: number; stopTimerRef: React.MutableRefObject<(() => void) | null>; }) => {
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -53,6 +54,7 @@ const CountdownTimer = ({ durationHours, stopTimerRef }: { durationHours: number
   );
 };
 
+// Main Preview component
 const Preview = ({}: Props) => {
   const router = useRouter();
   const { title } = router.query;
@@ -63,6 +65,7 @@ const Preview = ({}: Props) => {
 
   const stopTimerRef = useRef<(() => void) | null>(null);
 
+  // Handle end contest button click
   const handleClick = () => {
     if (!user) {
       toast.error("Sign in to participate in contest!", {
