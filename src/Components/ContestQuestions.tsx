@@ -16,6 +16,8 @@ export default function ContestQuestions({ setLoadingProblems }: Props) {
     const solvedProblems = useGetSolvedProblems();
     console.log(solvedProblems);
 
+    const points=[200,800,400,200,400];
+
   return (
     <tbody>
       {problems.map((problem, idx) => {
@@ -27,39 +29,35 @@ export default function ContestQuestions({ setLoadingProblems }: Props) {
             : 'text-red-500';
 
         return (
-          <tr
-            className={`${
+          <tr className={`${
               idx % 2 === 1 ? 'bg-gray-200' : 'bg-white'
             } hover:bg-gray-300 transition-all duration-300`}
-            key={problem.id}
-          >
+            key={problem.id} >
             <td className="px-6 py-3">
-                  {problem.link ? (
-									<Link
-										href={problem.link}
-										className='hover:text-blue-600 cursor-pointer text-[15px] font-semibold'
-										target='_blank'
-									>
-										{problem.title}
-									</Link>
-								) : (
-									<Link
-										className='hover:text-blue-600 cursor-pointer text-[15px] font-semibold'
-										href={`/problems/${problem.id}`}
-									>
-										{problem.title}
-									</Link>
-								)}
+              {problem.link ? (
+                <Link href={problem.link}
+                  className="hover:text-blue-600 cursor-pointer text-[15px] font-semibold"
+                  target="_blank">
+                  {problem.title}
+                </Link>
+              ) : (
+                <Link className="hover:text-blue-600 cursor-pointer text-[15px] font-semibold"
+                  href={`/problems/${problem.id}`}>
+                  {problem.title}
+                </Link>
+              )}
             </td>
-
+    
             <td className={`px-6 py-3 ${difficultyColor} font-semibold`}>
               {problem.difficulty}
             </td>
             <td className="px-6 py-3 font-semibold">
-              100
+              {points[idx]} 
             </td>
             <th className="px-6 py-3 font-medium">
-              {solvedProblems.includes(problem.id) && <BsCheckCircle className='text-green-500' fontSize={"18"} width='18' />}
+              {solvedProblems.includes(problem.id) && (
+                <BsCheckCircle className="text-green-500" fontSize={"18"} width="18" />
+              )}
             </th>
           </tr>
         );
@@ -73,12 +71,11 @@ function useGetProblems(setLoadingProblems: React.Dispatch<React.SetStateAction<
 
 	useEffect(() => {
 		const getProblems = async () => {
-			// fetching data logic
 			setLoadingProblems(true);
 			const q = query(collection(firestore, "problems"), orderBy("order", "asc"));
 			const querySnapshot = await getDocs(q);
 			const tmp: DBProblem[] = [];
-			querySnapshot.forEach((doc) => {
+			querySnapshot.docs.slice(0, 5).forEach((doc) => {
 				tmp.push({ id: doc.id, ...doc.data() } as DBProblem);
 			});
 			setProblems(tmp);
