@@ -13,7 +13,7 @@ type Props = {}
 export default function AuthPage({}: Props) {
 
   const authModal = useRecoilValue(authModalState);
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const router = useRouter();
 
   const [pageLoading, setPageLoading] = useState(true);
@@ -21,7 +21,8 @@ export default function AuthPage({}: Props) {
   useEffect(() => {
 	if (user) 
 	router.push("/");
-	if (!loading && !user) setPageLoading(false);
+	if (!loading && !user) 
+	setPageLoading(false);
 }, [user, router, loading]);
   
   return (

@@ -52,7 +52,7 @@ export default function Topbar({problemPage}: Props) {
       }
     };
 
-    const [signOut, loading, error] = useSignOut(auth);
+    const [signOut] = useSignOut(auth);
 
 	  const handleLogout = () => {
 		  signOut();
