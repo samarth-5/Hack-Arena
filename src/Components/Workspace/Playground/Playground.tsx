@@ -33,13 +33,13 @@ export default function Playground({problem, setSuccess, setSolved}: Props) {
 
   const [user] = useAuthState(auth);
 
-  const [fontSize, setFontSize] = useLocalStorage("lcc-fontSize", "16px");
+  const [fontSize] = useLocalStorage("lcc-fontSize", "16px");
 
   const [settings, setSettings] = useState<ISettings>({
-    fontSize: fontSize,
-    settingsModalIsOpen: false,
-    dropdownIsOpen: false,
-  });
+      fontSize: fontSize,
+      settingsModalIsOpen: false,
+      dropdownIsOpen: false,
+    });
 
   const { query: { pid } } = useRouter();
 
