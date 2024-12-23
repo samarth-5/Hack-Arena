@@ -1,13 +1,15 @@
 import assert from "assert";
 import { Problem } from "../types/problem";
 
-const starterCodeTwoSum = `function twoSum(nums,target){
+type TwoSumFunction = (nums: number[], target: number) => number[];
+
+const starterCodeTwoSum = `function twoSum(nums, target){
   // Write your code here
 };`;
 
-// checks if the user has the correct code
-const handlerTwoSum = (fn: any) => {
-	// fn is the callback that user's code is passed into
+const handlerTwoSum = (fn: unknown): boolean => {
+	const twoSumFn = fn as TwoSumFunction;
+
 	try {
 		const nums = [
 			[2, 7, 11, 15],
@@ -22,16 +24,19 @@ const handlerTwoSum = (fn: any) => {
 			[0, 1],
 		];
 
-		// loop all tests to check if the user's code is correct
 		for (let i = 0; i < nums.length; i++) {
-			// result is the output of the user's function and answer is the expected output
-			const result = fn(nums[i], targets[i]);
+			const result = twoSumFn(nums[i], targets[i]);
 			assert.deepStrictEqual(result, answers[i]);
 		}
 		return true;
-	} catch (error: any) {
-		console.log("twoSum handler function error");
-		throw new Error(error);
+	} catch (error: unknown) {
+		if (error instanceof Error) {
+			console.log("twoSum handler function error:", error.message);
+			throw new Error(error.message);
+		} else {
+			console.log("twoSum handler function error:", error);
+			throw new Error("An unknown error occurred");
+		}
 	}
 };
 
@@ -76,7 +81,7 @@ export const twoSum: Problem = {
 <li class='mt-2 text-sm'>
 <strong>Only one valid answer exists.</strong>
 </li>`,
-	handlerFunction: handlerTwoSum,
+	handlerFunction: handlerTwoSum, 
 	starterCode: starterCodeTwoSum,
 	order: 1,
 	starterFunctionName: "function twoSum(",

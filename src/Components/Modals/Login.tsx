@@ -17,7 +17,7 @@ export default function Login() {
   
   const [inputs, setInputs] = useState({ email: "", password: "" });
 	
-  const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
+  const [signInWithEmailAndPassword, loading, error] = useSignInWithEmailAndPassword(auth);
 	
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -34,16 +34,21 @@ export default function Login() {
       toast.success("User Logged in successfully!", { position: "top-center", autoClose: 3000, theme: "dark" });
       setAuthModalState((prev) => ({ ...prev, isOpen: false }));
 			router.push("/");
-		} catch (error: any) {
-			toast.error(error.message, { position: "top-center", autoClose: 3000, theme: "dark" });
-		}
+		} 
+    catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message, { position: "top-center", autoClose: 3000, theme: "dark" });
+      } else {
+        toast.error("An unknown error occurred", { position: "top-center", autoClose: 3000, theme: "dark" });
+      }
+    }    
   };
 
   //console.log(user);
 
   useEffect(()=>{
     if(error)
-      toast.error(error.message, { position: "top-center", autoClose: 3000, theme: "dark" });
+      toast.error(error, { position: "top-center", autoClose: 3000, theme: "dark" });
   },[error]);
 
   return (
@@ -53,7 +58,7 @@ export default function Login() {
         Welcome Back!
       </h3>
       <p className="text-sm text-gray-400 text-center">
-        Sign in to continue to <span className="font-semibold text-gray-200">Hacker's Arena</span>
+        Sign in to continue to <span className="font-semibold text-gray-200">Hacker&apos;s Arena</span>
       </p>
 
       <div>
@@ -72,8 +77,7 @@ export default function Login() {
             border border-gray-500 rounded-md focus:ring focus:ring-gray-400 focus:border-gray-400
             block w-full p-3 bg-black text-gray-100 placeholder-gray-500 transition
           "
-          placeholder="name@company.com"
-        />
+          placeholder="name@company.com" />
       </div>
 
       <div>

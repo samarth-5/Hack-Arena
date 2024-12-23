@@ -14,7 +14,7 @@ export default function ResetPassword() {
   }
 
   const [email, setEmail] = useState("");
-	const [sendPasswordResetEmail, sending, error] = useSendPasswordResetEmail(auth);
+	const [sendPasswordResetEmail, error] = useSendPasswordResetEmail(auth);
 	const handleResetPassword = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const success = await sendPasswordResetEmail(email);
@@ -24,7 +24,7 @@ export default function ResetPassword() {
 
 	useEffect(() => {
 		if (error) {
-			alert(error.message);
+			toast.error(error, { position: "top-center", autoClose: 3000, theme: "dark" });
 		}
 	}, [error]);
 

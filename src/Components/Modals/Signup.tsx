@@ -18,7 +18,7 @@ export default function Register() {
   const [inputs, setInputs] = useState({ email: "", name: "", password: "" });
   const router = useRouter();  
   
-  const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth);
+  const [createUserWithEmailAndPassword, loading, error] = useCreateUserWithEmailAndPassword(auth);
   //console.log(createUserWithEmailAndPassword);
 
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,15 +52,21 @@ export default function Register() {
       setAuthModalState((prev) => ({ ...prev, isOpen: false }));
 			router.push("/");
 			//await setDoc(doc(firestore, "users", newUser.user.uid), userData);
-		} catch (error: any) {
-			toast.error(error.message, { position: "top-center", autoClose: 3000, theme: "dark" });
 		} 
+    catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message, { position: "top-center", autoClose: 3000, theme: "dark" });
+      } else {
+        toast.error("An unknown error occurred !", { position: "top-center", autoClose: 3000, theme: "dark" });
+      }
+    }
+    
   };
   //console.log(user);
 
   useEffect(()=>{
     if(error)
-      toast.error(error.message, { position: "top-center", autoClose: 3000, theme: "dark" });
+      toast.error(error, { position: "top-center", autoClose: 3000, theme: "dark" });
   },[error]);
 
   return (
@@ -72,7 +78,7 @@ export default function Register() {
         Create Your Account!
       </h3>
       <p className="text-sm text-gray-400 text-center">
-        Sign up to join <span className="font-semibold text-gray-200">Hacker's Arena</span>
+        Sign up to join <span className="font-semibold text-gray-200">Hacker&apos;s Arena</span>
       </p>
 
       <div>

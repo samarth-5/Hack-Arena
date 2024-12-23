@@ -80,7 +80,7 @@ export default function Home() {
         </h2>
         <p className="mt-4 text-center text-lg text-gray-600">
           Join a community of ambitious coders just like you. Tackle coding problems, compete with peers, and grow your expertise every day. 
-          Whether you're preparing for interviews or sharpening your problem-solving skills, we've got you covered.
+          Whether you&apos;re preparing for interviews or sharpening your problem-solving skills, we&apos;ve got you covered.
         </p>
         <p className="mt-4 text-center text-lg text-gray-600">
           Push your limits, learn from failures, and celebrate wins. This is your journey to greatness—one line of code at a time.

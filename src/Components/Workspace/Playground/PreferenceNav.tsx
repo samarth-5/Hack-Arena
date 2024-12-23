@@ -22,7 +22,7 @@ export default function PreferenceNav({setSettings, settings}: Props) {
   };
 
   useEffect(() => {
-	function exitHandler(e: any) {
+	function exitHandler() {
 		if (!document.fullscreenElement) {
 			setIsFullScreen(false);
 			return;

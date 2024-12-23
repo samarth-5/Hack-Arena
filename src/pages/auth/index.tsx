@@ -11,7 +11,7 @@ import { useRouter } from "next/router";
 export default function AuthPage() {
 
   const authModal = useRecoilValue(authModalState);
-  const [user, loading] = useAuthState(auth);
+  const [user] = useAuthState(auth);
   const router = useRouter();
 
   useEffect(() => {

@@ -4,7 +4,6 @@ import Link from 'next/link';
 import Image from "next/image";
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
 import { useSetRecoilState } from 'recoil';
-import Logout from './Buttons/Logout';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { BsList } from 'react-icons/bs';
 import Timer from './Timer';
