@@ -5,9 +5,7 @@ import { useSendPasswordResetEmail } from "react-firebase-hooks/auth";
 import { toast } from "react-toastify";
 import { useSetRecoilState } from "recoil";
 
-type Props = {};
-
-export default function ResetPassword({}: Props) {
+export default function ResetPassword() {
 
   const setAuthModalState = useSetRecoilState(authModalState);
 

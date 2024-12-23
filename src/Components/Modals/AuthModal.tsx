@@ -6,9 +6,7 @@ import ResetPassword from "./ResetPassword";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { authModalState } from "@/Atoms/authModalAtom";
 
-type Props = {};
-
-export default function AuthModal({}: Props) {
+export default function AuthModal() {
 
   const authModal = useRecoilValue(authModalState);
 	const closeModal = useCloseModal();

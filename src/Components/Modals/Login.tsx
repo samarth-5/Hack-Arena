@@ -6,9 +6,7 @@ import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { toast } from "react-toastify";
 import { useSetRecoilState } from "recoil";
 
-type Props = {};
-
-export default function Login({}: Props) {
+export default function Login() {
 
   const setAuthModalState = useSetRecoilState(authModalState);
   const router = useRouter();

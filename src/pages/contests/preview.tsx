@@ -11,7 +11,6 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/firebase/firebase';
 import Link from 'next/link';
 
-type Props = {}; 
 
 const CountdownTimer = ({ durationHours, stopTimerRef }: { durationHours: number; stopTimerRef: React.MutableRefObject<(() => void) | null>; }) => {
   const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
@@ -53,13 +52,14 @@ const CountdownTimer = ({ durationHours, stopTimerRef }: { durationHours: number
   );
 };
 
-const Preview = ({}: Props) => {
+const Preview = () => {
   const router = useRouter();
   const { title } = router.query;
 
   const [user] = useAuthState(auth);
   const authModal = useRecoilValue(authModalState);
-  const [loadingProblems, setLoadingProblems] = useState(true); 
+  const [loadingProblems, setLoadingProblems] = useState(true);
+  console.log(loadingProblems); 
 
   const stopTimerRef = useRef<(() => void) | null>(null);
 

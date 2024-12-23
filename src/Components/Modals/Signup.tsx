@@ -7,9 +7,7 @@ import { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import { doc, setDoc } from "firebase/firestore";
 
-type Props = {};
-
-export default function Register({}: Props) {
+export default function Register() {
 
   const setAuthModalState = useSetRecoilState(authModalState);
 

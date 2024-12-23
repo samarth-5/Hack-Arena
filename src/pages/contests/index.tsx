@@ -9,9 +9,8 @@ import useHasMounted from "@/hooks/useHasMounted";
 import { contestDetailsModalState } from "@/Atoms/contestDetailsModal";
 import Details from "@/Components/Modals/Details";
 
-type Props = {};
 
-export default function ContestsPage({}: Props) {
+export default function ContestsPage() {
   const contestDetailsModal = useRecoilValue(contestDetailsModalState);
   console.log(contestDetailsModal);
   const authModal = useRecoilValue(authModalState);

@@ -4,14 +4,10 @@ import Navbar from '@/Components/Navbar';
 import ProblemsTable from '@/Components/ProblemsTable';
 import useHasMounted from '@/hooks/useHasMounted';
 import Link from 'next/link';
-// import { firestore } from '@/firebase/firebase';
-// import { doc, setDoc } from 'firebase/firestore';
 import React, { useState } from 'react';
 import { useRecoilValue } from 'recoil';
 
-type Props = {};
-
-export default function ProblemsPage({}: Props) {
+export default function ProblemsPage() {
   const authModal = useRecoilValue(authModalState);
 
   const [loadingProblems, setLoadingProblems] = useState(true);
@@ -50,7 +46,7 @@ export default function ProblemsPage({}: Props) {
     <>
       <Navbar />
       <h1 className="text-3xl text-center text-gray-900 font-semibold mt-10 mb-6 uppercase">
-        &ldquo; QUALITY OVER QUANTITY &rdquo; 
+        &quot;QUALITY OVER QUANTITY&quot;
       </h1>
 
       <div className="relative overflow-x-auto mx-auto px-4 sm:px-6 pb-10">

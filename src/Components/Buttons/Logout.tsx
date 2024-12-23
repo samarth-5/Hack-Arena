@@ -4,9 +4,7 @@ import { useSignOut } from 'react-firebase-hooks/auth';
 import { FiLogOut } from 'react-icons/fi';
 import { toast } from 'react-toastify';
 
-type Props = Record<string, never>;
-
-export default function Logout({}: Props) {
+export default function Logout() {
     const [signOut] = useSignOut(auth);
 
     const handleLogout = () => {

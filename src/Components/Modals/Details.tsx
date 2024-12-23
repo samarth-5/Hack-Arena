@@ -3,9 +3,7 @@ import React, { useEffect } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { useSetRecoilState } from 'recoil';
 
-type Props = {};
-
-export default function Details({}: Props) {
+export default function Details() {
   const closeModal = useCloseModal();
 
   return (

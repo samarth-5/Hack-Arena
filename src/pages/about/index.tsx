@@ -8,9 +8,7 @@ import { authModalState } from '@/Atoms/authModalAtom';
 import AuthModal from '@/Components/Modals/AuthModal';
 import useHasMounted from '@/hooks/useHasMounted';
 
-type Props = {}
-
-export default function AboutPage({}: Props) {
+export default function AboutPage() {
 
   const authModal = useRecoilValue(authModalState);
   const hasMounted = useHasMounted();

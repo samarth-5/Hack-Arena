@@ -6,9 +6,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/firebase";
 import Logout from "./Buttons/Logout";
 
-type Props = {}
-
-export default function Navbar({}: Props) {
+export default function Navbar() {
 
 	const [user] = useAuthState(auth);
 

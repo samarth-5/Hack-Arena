@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FiRefreshCcw } from "react-icons/fi";
-type Props = {}
 
-export default function Timer({}: Props) {
+export default function Timer() {
 
     const [showTimer, setShowTimer] = useState<boolean>(false);
 	const [time, setTime] = useState<number>(0);
