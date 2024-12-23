@@ -9,7 +9,7 @@ import CircleSkeleton from "@/Components/Skeletons/CircleSkeleton";
 import RectangleSkeleton from "@/Components/Skeletons/RectangleSkeleton";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { toast } from 'react-toastify';
-
+import Image from 'next/image'; 
 
 type Props = {
   problem: Problem
@@ -229,16 +229,18 @@ export default function ProblemDesc({problem, _solved}: Props) {
                     Example {index + 1}
                   </p>
 
-                  {/* Optional Example Image */}
+                 
                   {example.img && (
-                    <img
-                      src={example.img}
+                    <Image
+                      src={example.img} 
                       alt={`Example ${index + 1}`}
                       className="rounded-md mb-4 shadow-lg"
+                      width={300}   
+                      height={300}  
+                      layout="intrinsic" 
                     />
                   )}
 
-                  {/* Example Content Card */}
                   <div className="example-card bg-white text-black p-4 rounded-b-md shadow-md border border-black">
                     <pre className="text-sm">
                       <strong>Input:</strong> {example.inputText}

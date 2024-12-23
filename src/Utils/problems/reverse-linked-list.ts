@@ -12,8 +12,8 @@ class LinkedList {
   }
 
   reverse(): LinkedList | null {
-    let current: LinkedList | null = this;
     let prev: LinkedList | null = null;
+    let current: LinkedList | null = this;
 
     while (current !== null) {
       const next: LinkedList | null = current.next;
@@ -23,7 +23,7 @@ class LinkedList {
     }
 
     return prev; 
-  }
+}
 }
 
 export const reverseLinkedListHandler = (fn: unknown): boolean => {

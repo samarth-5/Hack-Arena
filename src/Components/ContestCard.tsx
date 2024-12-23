@@ -2,6 +2,7 @@ import { contestDetailsModalState } from "@/Atoms/contestDetailsModal";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useSetRecoilState } from "recoil";
+import Image from 'next/image';
 
 type CountdownTimerProps = {
   endDate: Date;
@@ -54,8 +55,13 @@ const ContestCard = ({ title, endDate, image, actionLabel }: ContestCardProps) =
 
   return (
     <div className="w-full max-w-xs border border-gray-300 rounded-2xl bg-white shadow-lg overflow-hidden transform transition-transform hover:scale-105 hover:shadow-xl">
-      <div className="w-full h-56 p-2 bg-gray-200">
-        <img src={image} alt={title} className="w-full h-full object-cover rounded-t-xl" />
+      <div className="w-full h-100 p-2 bg-gray-200">
+      <Image src={image} 
+             alt={title} 
+             className="rounded-t-xl object-contain"   
+             height={100}  
+             width={300}  
+             layout="intrinsic" />
       </div>
 
       <div className="p-6">
