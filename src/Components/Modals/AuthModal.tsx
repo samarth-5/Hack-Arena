@@ -5,6 +5,7 @@ import React, { useEffect } from "react";
 import ResetPassword from "./ResetPassword";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { authModalState } from "@/Atoms/authModalAtom";
+import ModalPortal from "@/Components/ModalPortal";
 
 export default function AuthModal() {
 
@@ -12,37 +13,37 @@ export default function AuthModal() {
 	const closeModal = useCloseModal();
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      
-      {/* overlay */}
-      <div
-        className="absolute inset-0 bg-black/75"
-        onClick={closeModal}
-      />
+    <ModalPortal>
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center">
   
-      {/* modal */}
-      <div className="relative w-full max-w-[450px] mx-4">
-        <div className="bg-gradient-to-b from-gray-800 to-black rounded-xl shadow-lg border border-gray-700 p-6">
+        <div
+          className="absolute inset-0 bg-black/75"
+          onClick={closeModal}
+        />
   
-          <div className="flex justify-end">
-            <button
-              type="button"
-              className="bg-transparent rounded-full text-gray-400 p-2 hover:bg-gray-700 hover:text-white"
-              onClick={closeModal}
-            >
-              <IoClose className="h-6 w-6" />
-            </button>
+        <div className="relative w-full max-w-[450px] mx-4">
+          <div className="bg-gradient-to-b from-gray-800 to-black rounded-xl shadow-lg border border-gray-700 p-6">
+  
+            <div className="flex justify-end">
+              <button
+                type="button"
+                className="bg-transparent rounded-full text-gray-400 p-2 hover:bg-gray-700 hover:text-white"
+                onClick={closeModal}
+              >
+                <IoClose className="h-6 w-6" />
+              </button>
+            </div>
+  
+            {authModal.type === "login"
+              ? <Login />
+              : authModal.type === "register"
+              ? <Signup />
+              : <ResetPassword />}
           </div>
-  
-          {authModal.type === "login"
-            ? <Login />
-            : authModal.type === "register"
-            ? <Signup />
-            : <ResetPassword />}
         </div>
-      </div>
   
-    </div>
+      </div>
+    </ModalPortal>
   );
 }
 
